@@ -9,6 +9,7 @@
 	$text = $message["text"];
 	$cid = $update["message"]["from"]["id"];
 	$from = $message["from"];
+	$name = $from["first_name"];
 
 	function apiRequest($metodo){
 		$req = http_request(api.$metodo);
@@ -20,5 +21,16 @@
 			$text = urlencode($text);
 		}
 		return apiRequest("sendMessage?text=$text&parse_mode=HTML&chat_id=$id");
+	}
+
+	function keyboard($tasti, $text, $id)
+	{
+		$tasti_ric = $tasti;
+		$decod_tasti = json_encode($tasti_ric);
+
+		if (strpos($text, "\n")) {
+			$text = urlencode($text);
+		}
+		apiRequest("sendMessage?text=$text&parse_mode=Markdown&chat_id=$id&reply_markup=$decod_tasti");
 	}
 ?>
