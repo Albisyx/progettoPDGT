@@ -14,6 +14,7 @@
 
             $key = array(
             				"resize_keyboard" => true,
+            				"one_time_keyboard" => true,
                             "keyboard" => $keyboard,
                         );
 
@@ -27,6 +28,7 @@
 
             $key = array(
             				"resize_keyboard" => true,
+            				"one_time_keyboard" => true,
                             "keyboard" => $keyboard,
                         );
 
@@ -36,7 +38,7 @@
 			send($cid, "Di che artista vuoi\ntrovare le canzoni\npiù popolari ?");
 			break;
 		case "Info 📰":
-			send($cid, "Di quale artista\nvuoi infirmazioni ?");
+			send($cid, "Di quale artista\nvuoi informazioni ?");
 			break;
 		case "Genere 🎵":
 			send($cid, "Che genere musicale\nstai cercando ?");
@@ -55,6 +57,7 @@
 
             $key = array(
             				"resize_keyboard" => true,
+            				"one_time_keyboard" => true,
                             "keyboard" => $keyboard,
                         );
 
@@ -67,7 +70,6 @@
 			send($cid, "Che canzone vuoi ascoltare ?");
 			break;
 		case "Indietro 🔙":
-			case "/tastiera":
 			$keyboard = [
             				["Artista 🎤", "Genere 🎵"],
                         	["Nuove uscite 🕒", "Testo canzone 📜"],
@@ -76,6 +78,7 @@
 
             $key = array(
             				"resize_keyboard" => true,
+            				"one_time_keyboard" => true,
                             "keyboard" => $keyboard,
                         );
 
