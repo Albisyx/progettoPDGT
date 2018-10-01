@@ -50,7 +50,8 @@ app.get('/top-tracks/:nomeArtista', (req, res) =>
       {
           // mi faccio stampare l'id per vedere se la chiamata ha funzinato
           console.log( 'ID => ' + data['artists']['items'][0]['id']);
-          res.send(data['artists']['items'][0]['id']);
+          res.status(200);
+          res.send(data['artists']['items'][0]['id']).end();
       })
       .catch(function(err)
       {
@@ -58,7 +59,7 @@ app.get('/top-tracks/:nomeArtista', (req, res) =>
           res.send(err);
       });
 });  
-    
+
 app.listen(3000, function()
   {
       console.log('Server in ascolto sulla porta 3000...');
