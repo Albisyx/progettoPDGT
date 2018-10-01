@@ -11,8 +11,8 @@ let app = express();
 // quindi l'autenticazione è a livello di client, non a livello di utente
 
 let spotifyApi = new SpotifyWebApi({
-  clientId: credenziali.client_id, 
-  clientSecret: credenziali.client_secret
+  clientId: process.env.CLIENT_ID, 
+  clientSecret: process.env.CLIENT_SECRET
 });
 
 // invoco la funzione per ottenere il token
