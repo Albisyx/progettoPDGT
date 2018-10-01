@@ -1,6 +1,7 @@
 <?php
 	define('api', 'https://api.telegram.org/bot'.token.'/');
 	require_once(dirname(__FILE__).'/curl-lib.php');
+	require_once(dirname(__FILE__).'./token.php');
 
 	$data = file_get_contents('php://input');
 	$update = json_decode($data, true);
