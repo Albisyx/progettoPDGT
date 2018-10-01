@@ -49,8 +49,8 @@ app.get('/top-tracks/:nomeArtista', (req, res) =>
       .then(function(data)
       {
           // mi faccio stampare l'id per vedere se la chiamata ha funzinato
-          //console.log( 'ID => ' + data['artists']['items'][0]['id']);
-          res.send(data['artists']['items'][0]['id']).end();
+          console.log( 'ID => ' + data['artists']['items'][0]['id']);
+          res.send(data['artists']['items'][0]['id']);
       })
       .catch(function(err)
       {
