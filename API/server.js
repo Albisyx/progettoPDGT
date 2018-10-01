@@ -29,9 +29,34 @@ spotifyApi.clientCredentialsGrant()
       console.log(err);
   });
 
-app.get('/', (req, res) => 
+// metodo che ritorna le 10 canzoni più popolari di un artista
+// per far cio, devo prima ottenere l'id dell'artista partendo dal suo nome
+ // devo quindi effettuare due chiamate a due metodi diversi delle API di Spotify
+app.get('/top-tracks/:nomeArtista', (req, res) => 
 {
-    res.send('homepage').end();
+    // variabile per effettuare la prima chiamata ed ottenere l'id partendo dal nome
+    let artistIDOptions =
+    {
+      uri: 'https://api.spotify.com/v1/search?q=' + encodeURIComponent(req.params.nomeArtista) +'&type=artist&market=it&limit=1',
+      headers: 
+          {
+              'Authorization': 'Bearer ' + spotifyApi.getAccessToken()
+          },
+      json: true
+    };
+
+    rp(artistIDOptions)
+      .then(function(data)
+      {
+          // mi faccio stampare l'id per vedere se la chiamata ha funzinato
+          console.log( 'ID => ' + data['artists']['items'][0]['id']);
+          res.end();
+      })
+      .catch(function(err)
+      {
+          console.log(err);
+          res.send(err);
+      });
 });  
     
 app.listen(3000, function()
