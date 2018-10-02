@@ -81,7 +81,7 @@ function getArtistTopTracks(IDArtista, response)
           let topTracks = {};
 
           for(track in data['tracks'])
-              topTracks['Track ' + parseInt(track + 1)] = data['tracks'][track]['name'];
+              topTracks['Track ' + (parseInt(track) + 1)] = data['tracks'][track]['name'];
 
           response.send(topTracks);
       })
@@ -94,5 +94,5 @@ function getArtistTopTracks(IDArtista, response)
 
 app.listen(PORT, function()
   {
-      console.log('Server in ascolto sulla porta ${PORT}/');
+      console.log('Server in ascolto sulla porta ' + PORT);
   });
