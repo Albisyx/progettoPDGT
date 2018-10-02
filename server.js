@@ -67,7 +67,7 @@ function getArtistTopTracks(IDArtista, response)
     // variabile per effettuare la seconda chiamata alle API di spotify
     let topTracksOptions = 
     {
-        uri: 'https://api.spotify.com/v1/artists/' + artistID + '/top-tracks?country=it',
+        uri: 'https://api.spotify.com/v1/artists/' + IDArtista + '/top-tracks?country=it',
         headers:
         {
             'Authorization': 'Bearer ' + spotifyApi.getAccessToken()
