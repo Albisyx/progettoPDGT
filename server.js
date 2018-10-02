@@ -33,7 +33,9 @@ spotifyApi.clientCredentialsGrant()
  // devo quindi effettuare due chiamate a due metodi diversi delle API di Spotify
 app.get('/top-tracks/:nomeArtista', (req, res) => 
 {
-    // variabile per effettuare la prima chiamata ed ottenere l'id partendo dal nome
+    // Variabile per effettuare la prima chiamata ed ottenere l'id partendo dal nome
+    // Ogni chiamata deve essere accompagnata da un header che serve ai server di spotify
+    // per autenticare il client e permettergli di accedere ai dati richiesti 
     let artistIDOptions =
     {
       uri: 'https://api.spotify.com/v1/search?q=' + encodeURIComponent(req.params.nomeArtista) +'&type=artist&market=it&limit=1',
@@ -49,8 +51,7 @@ app.get('/top-tracks/:nomeArtista', (req, res) =>
       {
           // mi faccio stampare l'id per vedere se la chiamata ha funzinato
           console.log( 'ID => ' + data['artists']['items'][0]['id']);
-          res.status(200);
-          res.send(data['artists']['items'][0]['id']).end();
+          
       })
       .catch(function(err)
       {
@@ -58,6 +59,33 @@ app.get('/top-tracks/:nomeArtista', (req, res) =>
           res.send(err);
       });
 });  
+
+// funzione che crea e restituisce il file json contenente le top tracks dato 
+// l'id di un'artista precedentemente ricavato
+function getArtistTopTracks(IDArtista, response)
+{
+    // variabile per effettuare la seconda chiamata alle API di spotify
+    let topTracksOptions = 
+    {
+        uri: 'https://api.spotify.com/v1/artists/' + artistID + '/top-tracks?country=it',
+        headers:
+        {
+            'Authorization': 'Bearer ' + spotifyApi.getAccessToken()
+        },
+        json: true
+    };   
+    
+    rp(topTracksOptions)
+      .then(function(data)
+      {
+
+      })
+      .catch(function(err)
+      {
+          console.log(err);
+          res.send(err);
+      })
+};
 
 app.listen(PORT, function()
   {
