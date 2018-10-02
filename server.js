@@ -50,7 +50,7 @@ app.get('/top-tracks/:nomeArtista', (req, res) =>
       .then(function(data)
       {
           // mi faccio stampare l'id per vedere se la chiamata ha funzinato
-          getArtistTopTracks(data['artists']['items'][0]['id']);
+          getArtistTopTracks(data['artists']['items'][0]['id'], res);
           
       })
       .catch(function(err)
@@ -83,12 +83,12 @@ function getArtistTopTracks(IDArtista, response)
           for(track in data['tracks'])
               topTracks['Track ' + parseInt(track + 1)] = data['tracks'][track]['name'];
 
-          res.send(topTracks);
+          response.send(topTracks);
       })
       .catch(function(err)
       {
           console.log(err);
-          res.send(err);
+          response.send(err);
       })
 };
 
