@@ -1,8 +1,9 @@
 let express = require('express');
 let rp = require('request-promise');
 let SpotifyWebApi = require('spotify-web-api-node');
+//let credenziali = require('./credenziali.js'); // file contenente le credenziali per autenticarsi con spotify
+                                               // esso non è presente nella repository
 let app = express();
-const PORT = process.env.PORT || 5000;
 
 // uso la libreria spotify-web-api-node per ottenere un acces_token
 // uso la modalità di autenticazione fornita da spotify che permette di ottenere, 
@@ -48,8 +49,7 @@ app.get('/top-tracks/:nomeArtista', (req, res) =>
       .then(function(data)
       {
           // mi faccio stampare l'id per vedere se la chiamata ha funzinato
-          console.log( 'ID => ' + data['artists']['items'][0]['id']);
-          res.status(200);
+          //console.log( 'ID => ' + data['artists']['items'][0]['id']);
           res.send(data['artists']['items'][0]['id']).end();
       })
       .catch(function(err)
@@ -58,8 +58,8 @@ app.get('/top-tracks/:nomeArtista', (req, res) =>
           res.send(err);
       });
 });  
-
-app.listen(PORT, function()
+    
+app.listen(3000, function()
   {
-      console.log('Server in ascolto sulla porta ${PORT}/');
+      console.log('Server in ascolto sulla porta 3000...');
   });
