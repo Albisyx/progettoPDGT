@@ -31,7 +31,7 @@ spotifyApi.clientCredentialsGrant()
 // metodo che ritorna le 10 canzoni più popolari di un artista
 // per far cio, devo prima ottenere l'id dell'artista partendo dal suo nome
  // devo quindi effettuare due chiamate a due metodi diversi delle API di Spotify
-app.get('/top-tracks/:nomeArtista', (req, res) => 
+app.get('/artist/top-tracks/:nomeArtista', (req, res) => 
 {
     // Variabile per effettuare la prima chiamata ed ottenere l'id partendo dal nome
     // Ogni chiamata deve essere accompagnata da un header che serve ai server di spotify
