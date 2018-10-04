@@ -60,6 +60,30 @@ app.get('/artist/top-tracks/:nomeArtista', (req, res) =>
       });
 });  
 
+app.get('/artist/info/:nomeArtista', (req, res) =>
+{
+	let artistIDOptions =
+    {
+      uri: 'https://api.spotify.com/v1/search?q=' + encodeURIComponent(req.params.nomeArtista) +'&type=artist&market=it&limit=1',
+      headers: 
+          {
+              'Authorization': 'Bearer ' + spotifyApi.getAccessToken()
+          },
+      json: true
+    };
+
+    let info = {};
+
+    rp(artistIDOptions)
+      .then(function(data)
+      {
+      	  infi['Nome'] = data[]
+      })
+      .catch(function(err){
+
+      })
+})
+
 // funzione che crea e restituisce il file json contenente le top tracks dato 
 // l'id di un'artista precedentemente ricavato
 function getArtistTopTracks(IDArtista, response)
