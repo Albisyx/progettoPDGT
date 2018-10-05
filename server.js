@@ -31,7 +31,7 @@ spotifyApi.clientCredentialsGrant()
 // metodo che ritorna le 10 canzoni più popolari di un artista
 // per far cio, devo prima ottenere l'id dell'artista partendo dal suo nome
  // devo quindi effettuare due chiamate a due metodi diversi delle API di Spotify
-app.get('/artist/top-tracks/:nomeArtista', (req, res) => 
+app.get('/artist/:nomeArtista', (req, res) => 
 {
     // Variabile per effettuare la prima chiamata ed ottenere l'id partendo dal nome
     // Ogni chiamata deve essere accompagnata da un header che serve ai server di spotify
@@ -46,43 +46,47 @@ app.get('/artist/top-tracks/:nomeArtista', (req, res) =>
       json: true
     };
 
-    rp(artistIDOptions)
-      .then(function(data)
-      {
-          // mi faccio stampare l'id per vedere se la chiamata ha funzinato
-          getArtistTopTracks(data['artists']['items'][0]['id'], res);
-          
-      })
-      .catch(function(err)
-      {
-          console.log(err);
-          res.send(err);
-      });
+    if(req.query.type == 'top-tracks')
+    {
+    	rp(artistIDOptions)
+	      .then(function(data)
+	      {
+	          getArtistTopTracks(data['artists']['items'][0]['id'], res);
+	      })
+	      .catch(function(err)
+	      {
+	          console.log(err);
+	          res.send(err);
+	      });
+	}
+	else if(req.query.type == 'info')
+	{
+		let info = {};
+
+	    rp(artistIDOptions)
+	      .then(function(data)
+	      {
+	      	  let artist = data['artists']['items'][0];
+	      	  info['Nome'] = artist['name'];
+	      	  info['Followers'] = artist['followers']['total'];
+	      	  info['Popolarità'] = artist['popularity'];
+
+	      	  let generi = [];
+	      	  for(var i = artist['genres'].length - 1; i >= 0; i--) {
+	      	      generi.push(artist['genres'][i]);
+			  }
+
+			  info['Generi'] = generi;
+			  res.send(info);
+	      })
+	      .catch(function(err){
+
+	      })
+	}
+
+    
 });  
 
-app.get('/artist/info/:nomeArtista', (req, res) =>
-{
-	let artistIDOptions =
-    {
-      uri: 'https://api.spotify.com/v1/search?q=' + encodeURIComponent(req.params.nomeArtista) +'&type=artist&market=it&limit=1',
-      headers: 
-          {
-              'Authorization': 'Bearer ' + spotifyApi.getAccessToken()
-          },
-      json: true
-    };
-
-    let info = {};
-
-    rp(artistIDOptions)
-      .then(function(data)
-      {
-      	  infi['Nome'] = data[]
-      })
-      .catch(function(err){
-
-      })
-})
 
 // funzione che crea e restituisce il file json contenente le top tracks dato 
 // l'id di un'artista precedentemente ricavato
