@@ -83,7 +83,7 @@ app.get('/artist/:nomeArtista', (req, res) =>
   	      .catch(function(err){
               res.send(err);
   	      })
-	}
+	  }
 });  
 
 app.get('/new-releases', (req, res) =>
@@ -168,7 +168,7 @@ function getNewReleases(releases)
             "Data di rilascio" : item.release_date,
             "Link"             : item.uri
         });
-    };
+    })
 
     return datiAlbum;
 };
