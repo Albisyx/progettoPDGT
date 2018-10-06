@@ -38,7 +38,7 @@ app.get('/artist/:nomeArtista', (req, res) =>
     // per autenticare il client e permettergli di accedere ai dati richiesti 
     let artistIDOptions =
     {
-        uri: 'https://api.spotify.com/v1/search?q=' + encodeURIComponent(req.params.nomeArtista) +'&type=artist&market=it&limit=1',
+        uri: 'https://api.spotify.com/v1/search?q=' + encodeURIComponent(req.params.nomeArtista) +'&type=artist&market=IT&limit=1',
         headers: 
             {
                 'Authorization': 'Bearer ' + spotifyApi.getAccessToken()
@@ -86,6 +86,20 @@ app.get('/artist/:nomeArtista', (req, res) =>
 	}
 });  
 
+app.get('/new-releases', (req, res) =>
+{
+    let options = 
+    {
+        uri: 'https://api.spotify.com/v1/browse/new-releases?country=IT&limit=5',
+        headers: 
+        {
+            'Authorization': 'Bearer ' + spotifyApi.getAccessToken()
+        },
+        json: true
+    };
+
+    
+});
 
 // funzione che crea e restituisce il file json contenente le top tracks dato 
 // l'id di un'artista precedentemente ricavato
@@ -94,7 +108,7 @@ function getArtistTopTracks(IDArtista, response)
     // variabile per effettuare la seconda chiamata alle API di spotify
     let topTracksOptions = 
     {
-        uri: 'https://api.spotify.com/v1/artists/' + IDArtista + '/top-tracks?country=it',
+        uri: 'https://api.spotify.com/v1/artists/' + IDArtista + '/top-tracks?country=IT',
         headers:
         {
             'Authorization': 'Bearer ' + spotifyApi.getAccessToken()
