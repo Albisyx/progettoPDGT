@@ -156,7 +156,7 @@ function getNewReleases(releases)
         // creo un vettore con tutti gli artisti che hanno partecipato all'i-esimo album
         let artisti = [];
         for(let i in item.artists)
-            artisti.push(item.artists[i]);
+            artisti.push(item.artists[i].name);
 
         // popolo l'oggetto finale
         datiAlbum.albums.push(
