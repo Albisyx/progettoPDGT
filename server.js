@@ -18,8 +18,6 @@ let spotifyApi = new SpotifyWebApi({
 spotifyApi.clientCredentialsGrant()
   .then(function(data) 
   {
-      console.log('Token ' + data.body['access_token']);
-
       // salvo il token, almeno lo posso usare nelle future chiamate
       spotifyApi.setAccessToken(data.body['access_token']);
   },
@@ -174,6 +172,6 @@ function getNewReleases(releases)
 };
 
 app.listen(PORT, function()
-  {
-      console.log('Server in ascolto sulla porta ' + PORT);
-  });
+{
+    console.log('Server in ascolto sulla porta ' + PORT);
+});
