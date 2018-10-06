@@ -72,7 +72,7 @@ app.get('/artist/:nomeArtista', (req, res) =>
   	      	  info['Popolarità'] = artist['popularity'];
 
   	      	  let generi = [];
-  	      	  for(let i = 0; i < data['artists']['items'].length; i++) {
+  	      	  for(let i = 0; i < artist['genres'].length; i++) {
   	      	      generi.push(artist['genres'][i]);
   			      }
 
