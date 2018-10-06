@@ -38,53 +38,51 @@ app.get('/artist/:nomeArtista', (req, res) =>
     // per autenticare il client e permettergli di accedere ai dati richiesti 
     let artistIDOptions =
     {
-      uri: 'https://api.spotify.com/v1/search?q=' + encodeURIComponent(req.params.nomeArtista) +'&type=artist&market=it&limit=1',
-      headers: 
-          {
-              'Authorization': 'Bearer ' + spotifyApi.getAccessToken()
-          },
-      json: true
+        uri: 'https://api.spotify.com/v1/search?q=' + encodeURIComponent(req.params.nomeArtista) +'&type=artist&market=it&limit=1',
+        headers: 
+            {
+                'Authorization': 'Bearer ' + spotifyApi.getAccessToken()
+            },
+        json: true
     };
 
     if(req.query.type == 'top-tracks')
     {
-    	rp(artistIDOptions)
-	      .then(function(data)
-	      {
-	          getArtistTopTracks(data['artists']['items'][0]['id'], res);
-	      })
-	      .catch(function(err)
-	      {
-	          console.log(err);
-	          res.send(err);
-	      });
+      	rp(artistIDOptions)
+  	      .then(function(data)
+  	      {
+  	          getArtistTopTracks(data['artists']['items'][0]['id'], res);
+  	      })
+  	      .catch(function(err)
+  	      {
+  	          console.log(err);
+  	          res.send(err);
+  	      });
+	  }
+	  else if(req.query.type == 'info')
+	  {
+		    let info = {};
+
+  	    rp(artistIDOptions)
+  	      .then(function(data)
+  	      {
+  	      	  let artist = data['artists']['items'][0];
+  	      	  info['Nome'] = artist['name'];
+  	      	  info['Followers'] = artist['followers']['total'];
+  	      	  info['Popolarità'] = artist['popularity'];
+
+  	      	  let generi = [];
+  	      	  for(var i = artist['genres'].length - 1; i >= 0; i--) {
+  	      	      generi.push(artist['genres'][i]);
+  			      }
+
+  			      info['Generi'] = generi;
+  			      res.send(info);
+  	      })
+  	      .catch(function(err){
+              res.send(err);
+  	      })
 	}
-	else if(req.query.type == 'info')
-	{
-		let info = {};
-
-	    rp(artistIDOptions)
-	      .then(function(data)
-	      {
-	      	  let artist = data['artists']['items'][0];
-	      	  info['Nome'] = artist['name'];
-	      	  info['Followers'] = artist['followers']['total'];
-	      	  info['Popolarità'] = artist['popularity'];
-
-	      	  let generi = [];
-	      	  for(var i = artist['genres'].length - 1; i >= 0; i--) {
-	      	      generi.push(artist['genres'][i]);
-			  }
-
-			  info['Generi'] = generi;
-			  res.send(info);
-	      })
-	      .catch(function(err){
-
-	      })
-	}
-
-    
 });  
 
 
@@ -106,10 +104,12 @@ function getArtistTopTracks(IDArtista, response)
     rp(topTracksOptions)
       .then(function(data)
       {
-          let topTracks = {};
+          let topTracks = {
+              tracks : []
+          };
 
-          for(track in data['tracks'])
-              topTracks['Track ' + (parseInt(track) + 1)] = data['tracks'][track]['name'];
+          for(item in data['tracks'])
+              topTracks.tracks.push(data['tracks'][item]['name']);
 
           response.send(topTracks);
       })
