@@ -20,7 +20,7 @@ spotifyApi.clientCredentialsGrant()
   {
       console.log('Token ' + data.body['access_token']);
 
-      // salvo il token almeno lo posso usare nelle future chiamate
+      // salvo il token, almeno lo posso usare nelle future chiamate
       spotifyApi.setAccessToken(data.body['access_token']);
   },
   function(err) 
@@ -98,7 +98,16 @@ app.get('/new-releases', (req, res) =>
         json: true
     };
 
-    
+    rp(options)
+      .then(function(data)
+      {
+          let nuoviAlbum = getNewReleases(data['albums']['items']);
+          res.send(nuoviAlbum);
+      })
+      .catch(function(err)
+      {
+          res.send(err);
+      })
 });
 
 // funzione che crea e restituisce il file json contenente le top tracks dato 
@@ -133,6 +142,35 @@ function getArtistTopTracks(IDArtista, response)
           console.log(err);
           response.send(err);
       })
+};
+
+function getNewReleases(releases)
+{
+    let datiAlbum = {
+        albums: []
+    };
+
+    // per ogni album nuovo, prelevo le informazioni più rilevanti
+    releases.map(function(item) 
+    {        
+        // creo un vettore con tutti gli artisti che hanno partecipato all'i-esimo album
+        let artisti = [];
+        for(let i in item.artists)
+            artisti.push(item.artists[i]);
+
+        // popolo l'oggetto finale
+        datiAlbum.albums.push(
+        { 
+            "Tipo album"       : item.album_type,
+            "Nome"             : item.name,
+            "ID"               : item.id,
+            "Artisti"          : artisti,
+            "Data di rilascio" : item.release_date,
+            "Link"             : item.uri
+        });
+    };
+
+    return datiAlbum;
 };
 
 app.listen(PORT, function()
