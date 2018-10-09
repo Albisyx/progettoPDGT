@@ -5,6 +5,20 @@
 	switch ($text) {
 		case "/start":
 			send($cid, "Benvenuto $name,\nin 📀 MusicLyricBot 📀");
+
+			$keyboard = [
+            				["Artista 🎤", "Genere 🎵"],
+                        	["Nuove uscite 🕒", "Testo canzone 📜"],
+                        	["Ascolta musica 🎶"],
+                        ];
+
+            $key = array(
+            				"resize_keyboard" => true,
+            				"one_time_keyboard" => true,
+                            "keyboard" => $keyboard,
+                        );
+
+            keyboard($key, "Tastiera interattiva attivata !\nChe cosa vuoi cercare ?", $cid);
 			break;
         case "/tastiera":
 			$keyboard = [
@@ -19,7 +33,7 @@
                             "keyboard" => $keyboard,
                         );
 
-            keyboard($key, "Tastiera interattiva attivata !\nChe cosa vuoi cercare ?",$cid);
+            keyboard($key, "Che cosa vuoi cercare ?", $cid);
 			break;
 		case "Artista 🎤":
 			$keyboard = [
