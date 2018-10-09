@@ -1,6 +1,11 @@
 <?php
 	require_once(dirname(__FILE__).'/curl-lib.php');
 	require_once(dirname(__FILE__).'/token.php');
+	require_once(dirname(__FILE__).'/meekrodb.2.3.class.php');
+	//inizializzo parametri per la connessione al database
+	DB::$user = 'albertospadoni';
+	DB::$dbName = 'my_albertospadoni';
+	
 	define('api', 'https://api.telegram.org/bot'.token.'/');
 
 	$data = file_get_contents('php://input');
@@ -40,6 +45,20 @@
 		$url = 'https://progetto-pdgt.herokuapp.com/artist/'.urlencode($nomeArtista).'?type=top-tracks';
 		$dati = http_request($url);
 		
-		
+		if(!empty($dati))
+		{
+			for($i = 0; $i < count($dati['tracks']); $i++)
+				$nomiCanzoni .= "<b>".($i + 1).")</b> ".$dati['tracks'][$i]."\n";
+
+			send($chat_id, $nomiCanzoni);
+		}
+		else
+			send($chat_id, 'Artista non trovato, riprovare');
 	}
+
+	//==================================================
+	// METODI PER INTERAGIRE COL DATABASE DI ALTERVISTA
+	//==================================================
+
+
 ?>
