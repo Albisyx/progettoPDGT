@@ -34,4 +34,12 @@
 		}
 		apiRequest("sendMessage?text=$text&parse_mode=Markdown&chat_id=$id&reply_markup=$decod_tasti");
 	}
+
+	function topTracks($chat_id, $nomeArtista)
+	{
+		$url = 'https://progetto-pdgt.herokuapp.com/artist/'.urlencode($nomeArtista).'?type=top-tracks';
+		$dati = http_request($url);
+		
+		
+	}
 ?>
