@@ -68,7 +68,10 @@
 	function getState($cid)
 	{
 		$risultato = mysql_query("SELECT comando FROM comando_eseguito WHERE cid='$cid'");
-		$stato = mysql_fetch_array($risultato);
-		return $stato['comando'];
+		while($row = mysql_fetch_assoc($risultato));
+		{
+			$stato = $row['comando'];
+		}
+		return $stato;
 	}
 ?>
