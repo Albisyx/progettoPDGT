@@ -51,6 +51,7 @@
 			break;
 		case "Canzoni più popolari 🔝":
 			send($cid, "Di che artista vuoi\ntrovare le canzoni\npiù popolari ?");
+            update_state($cid, 1);
 			break;
 		case "Info 📰":
 			send($cid, "Di quale artista\nvuoi informazioni ?");
@@ -103,7 +104,16 @@
 			send($cid, "Elenco comandi:\n1) /tastiera ⌨");
 			break;
 		default:
-			send($cid, "Elemento non trovato ❌\nDigita /help per aprire i comnadi.");
+            $state = getState($cid);
+            switch($state)
+            {
+                case 0:
+                    send($cid, "Elemento non trovato ❌\nDigita /help per aprire i comnadi.");
+                case 1:
+                    topTracks($cid, $text);
+                    update_state($cid, 0);
+                    break;
+            }
 			break;
 	}
 ?>

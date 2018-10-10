@@ -34,15 +34,21 @@
 		apiRequest("sendMessage?text=$text&parse_mode=Markdown&chat_id=$id&reply_markup=$decod_tasti");
 	}
 
-	function update_state($cid, $text){
+	function update_state($cid, $state){
 		$dati_utente_db = mysql_query("SELECT * FROM comando_eseguito WHERE cid = '$cid'");
 		$array = mysql_fetch_array($dati_utente_db);
 
 		if($array[cid] == $cid){
-			mysql_query("UPDATE comando_eseguito SET comando = '$text' WHERE cid = '$cid'");
+			mysql_query("UPDATE comando_eseguito SET comando = '$state' WHERE cid = '$cid'");
 		}
 		else{
-			mysql_query("INSERT INTO comando_eseguito (cid, comando) VALUES ('$cid', '$text')");
+			mysql_query("INSERT INTO comando_eseguito (cid, comando) VALUES ('$cid', '$state')");
 		}	
+	}
+
+	function getState($cid)
+	{
+		$risultato = mysql_query("SELECT comando FROM comando_eseguito WHERE cid='$cid'");
+		return $risultato['comando'];
 	}
 ?>
