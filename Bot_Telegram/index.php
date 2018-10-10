@@ -107,7 +107,8 @@
 			break;
 	}
 
-	if ($text == "Canzoni più popolari 🔝" || $text == "Info 📰" || $text == "Genere 🎵" || $text == "Nuove uscite 🕒" || $text == "Testo canzone 📜" || $text == "Anteprima 💾" || $text == "Canzone completa 💽"){
+	if ($text == "Canzoni più popolari 🔝" || $text == "Info 📰" || $text == "Genere 🎵" || $text == "Nuove uscite 🕒" || $text == "Testo canzone 📜" || $text == "Anteprima 💾" || $text == "Canzone completa 💽")
+	{
 		$dati_utente_db = mysql_query("SELECT * FROM comando_eseguito WHERE cid = '$cid'");
 		$array = mysql_fetch_array($dati_utente_db);
 

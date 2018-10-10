@@ -57,21 +57,4 @@
 			send($chat_id, 'Artista non trovato, riprovare');
 	}
 
-	//==================================================
-	// METODI PER INTERAGIRE COL DATABASE DI ALTERVISTA
-	//==================================================
-
-	// metodo che inserisce nel database la chat_id e l'username di un utente
-	// se questi dati non esistono già
-	function registerUserIfNot($chat_id)
-	{
-		//controllo se l'utente è già registrato
-		$results = DB::query("SELECT username FROM utenti WHERE chatID=$chat_id");
-		if(!$results)
-			//registro l'utente
-			DB::query("INSERT INTO utenti VALUES (%d, %s, %d);", $chat_id, $GLOBALS['username'], 0);
-	}
-
-	//metodo per aggiornare lo stato di un determinato utente
-	function updateState()
 ?>
