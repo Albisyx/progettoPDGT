@@ -110,8 +110,9 @@
                 case 0:
                     send($cid, "Elemento non trovato ❌\nDigita /help per aprire i comnadi.");
                 case 1:
-                    topTracks($cid, $text);
-                    update_state($cid, 0);
+                    $bool = topTracks($cid, $text);
+                    if($bool == true)
+                        update_state($cid, 0);
                     break;
             }
 			break;

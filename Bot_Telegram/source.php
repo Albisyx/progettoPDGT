@@ -34,6 +34,25 @@
 		apiRequest("sendMessage?text=$text&parse_mode=Markdown&chat_id=$id&reply_markup=$decod_tasti");
 	}
 
+	function topTracks($chat_id, $nomeArtista)
+	{
+		$url = 'https://progetto-pdgt.herokuapp.com/artist/'.urlencode($nomeArtista).'?type=top-tracks';
+		$dati = http_request($url);
+		
+		if(!empty($dati))
+		{
+			for($i = 0; $i < count($dati['tracks']); $i++)
+				$nomiCanzoni .= "<b>".($i + 1).")</b> ".$dati['tracks'][$i]."\n";
+
+			send($chat_id, $nomiCanzoni);
+			return true;
+		}
+		else{
+			send($chat_id, 'Artista non trovato, riprovare');
+			return false;
+		}
+	}
+
 	function update_state($cid, $state){
 		$dati_utente_db = mysql_query("SELECT * FROM comando_eseguito WHERE cid = '$cid'");
 		$array = mysql_fetch_array($dati_utente_db);
