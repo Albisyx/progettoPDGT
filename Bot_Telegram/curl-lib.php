@@ -9,7 +9,6 @@
 	    }
 
 	    curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-	    curl_setopt($handle, CURLOPT_HTTPHEADER, array("User-Agent: il mio primo script PHP"));
 
 	    // Esecuzione della richiesta, $response = contenuto della risposta testuale
 	    $response = curl_exec($handle);
