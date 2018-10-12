@@ -107,13 +107,13 @@
             $state = getState($cid);
             switch($state)
             {
-                case 0:
-                    send($cid, "Elemento non trovato ❌\nDigita /help per aprire i comnadi.");
                 case 1:
                     $bool = topTracks($cid, $text);
-                    if($bool == true)
+                    if($bool)
                         update_state($cid, 0);
                     break;
+                default:
+                    send($cid, "Elemento non trovato ❌\nDigita /help per aprire i comnadi.");
             }
 			break;
 	}
