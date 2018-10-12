@@ -1,6 +1,7 @@
 <?php
 	require_once(dirname(__FILE__).'/curl-lib.php');
 	require_once(dirname(__FILE__).'/token.php');
+	include 'accesso-db.php';
 	define('api', 'https://api.telegram.org/bot'.token.'/');
 
 	$data = file_get_contents('php://input');
@@ -69,6 +70,7 @@
 	{
 		$risultato = mysql_query("SELECT comando FROM comando_eseguito WHERE cid='$cid'");
 		$row = mysql_fetch_assoc($risultato);
+
 		$stato = $row['comando'];
 		
 		return $stato;
