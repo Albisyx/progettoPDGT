@@ -19,6 +19,8 @@
 	        die("Richiesta HTTP fallita, status {$status}\n");
 	    }
 
+	    curl_close($handle);
+
 	    // Decodifica della risposta JSON
 	    return json_decode($response, true);
 	}
