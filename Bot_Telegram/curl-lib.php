@@ -20,6 +20,6 @@
 	    }
 
 	    // Decodifica della risposta JSON
-	    return json_decode($response);
+	    return json_decode($response, true);
 	}
 ?>
