@@ -1,6 +1,5 @@
 <?php
 	include 'source.php';
-	include 'accesso-db.php';
 
 	switch ($text) {
 		case "/start":
