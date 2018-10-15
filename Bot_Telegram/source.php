@@ -70,7 +70,7 @@
 			//variabili ausiliarie per comporre la stringa finale da restituire all'utente
 			$followers = "Followers -> <b>" . $dati['Followers'] . "</b>\n";
 			$popolarita = "Popolarità -> <b>" . $dati['Popolarità'] . "</b>\n";
-			$link = "Link a Spotify -> " . $dati['Link'] . "\n";
+			$link = "Link a Spotify -> <b>" . $dati['Link'] . "</b>\n";
 			$generi = "Generi: \n";
 			for($i = 0; $i < count($dati['Generi']); $i++)
 				$generi .= "<b>  -".$dati['Generi'][$i]."</b>\n";
