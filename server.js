@@ -20,6 +20,7 @@ spotifyApi.clientCredentialsGrant()
   {
       // salvo il token, almeno lo posso usare nelle future chiamate
       spotifyApi.setAccessToken(data.body['access_token']);
+      console.log('Token ottenuto. scadrà in ' + data.body['expires_in']);
   },
   function(err) 
   {
