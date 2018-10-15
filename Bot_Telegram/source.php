@@ -91,6 +91,30 @@
 		}
 	}
 	
+	// metodo che si interfaccia al percorso dell'API ?/new-releases
+	function getNewReleases()
+	{
+		$url = 'https://progetto-pdgt.herokuapp.com/new-releases';
+		$dati = http_request($url);
+
+		$nuoveUscite = "Ecco a te 5 nuovi album:\n";
+
+		for($i = 0; $i < count($dati['albums']); $i++)
+		{
+			$item = $dati['albums'][$i];
+			$nuoveUscite .= "<b>Tipo:</b> " . $item['Tipo album'] . "\n";
+			$nuoveUscite .= "<b>Nome:</b> " . $item['Nome'] . "\n";/*
+			for($i = 0; $i < count($item['Artisti']); $i++)
+				$nuoveUscite .= "<b>  -".$dati['Artisti'][$i]."</b>\n";*/
+			$nuoveUscite .= "<b>Data di rilascio:</b> " . $item['Data di rilascio'] . "\n";
+			$nuoveUscite .= "<b>Link:</b> " . $item['Link'] . "\n";
+			//separo con una linea vuota, un nuovo album dal successivo
+			$nuoveUscite .= "\n";
+		}
+
+		send($GLOBALS['cid'], $nuoveUscite);
+	}
+	
 	function update_state($cid, $state)
 	{
 		$dati_utente_db = mysql_query("SELECT * FROM comando_eseguito WHERE cid = '$cid'");
