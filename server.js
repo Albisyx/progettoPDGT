@@ -61,26 +61,25 @@ app.get('/artist/:nomeArtista', (req, res) =>
 	  {
 		    let info = {};
 
-  	    rp(artistIDOptions)
-  	      .then(function(data)
-  	      {
-  	      	  let artist = data['artists']['items'][0];
-  	      	  info['Nome'] = artist['name'];
-  	      	  info['Followers'] = artist['followers']['total'];
-  	      	  info['Popolarità'] = artist['popularity'];
-              info['Link'] = artist['uri'];
+	  	    rp(artistIDOptions)
+	  	      .then(function(data)
+	  	      {
+	  	      	  let artist = data['artists']['items'][0];
+	  	      	  info['Nome'] = artist['name'];
+	  	      	  info['Followers'] = artist['followers']['total'];
+	  	      	  info['Popolarità'] = artist['popularity'];
+	              info['Link'] = artist['uri'];
 
-  	      	  let generi = [];
-  	      	  for(let i = 0; i < artist['genres'].length; i++) {
-  	      	      generi.push(artist['genres'][i]);
-  			      }
+	  	      	  let generi = [];
+	  	      	  for(let i = 0; i < artist['genres'].length; i++) 
+	  	      	      generi.push(artist['genres'][i]);
 
-  			      info['Generi'] = generi;
-  			      res.send(info);
-  	      })
-  	      .catch(function(err){
-              res.send(err);
-  	      })
+	  		      info['Generi'] = generi;
+	  		      res.send(info);
+	  	      })
+	  	      .catch(function(err){
+	              res.send(err);
+	  	      })
 	  }
 });  
 
