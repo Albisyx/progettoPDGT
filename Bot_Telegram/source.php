@@ -56,6 +56,41 @@
 		return $esito;
 	}
 
+	//metodo per ottenere alcune informazioni riguardo ad un determinato artista
+	function getArtistInfo($chat_id, $nomeArtista)
+	{
+		$url = 'https://progetto-pdgt.herokuapp.com/artist/'.urlencode($nomeArtista).'?type=info';
+		$dati = http_request($url);
+
+		if(!empty($dati))
+		{
+			// stringa da inviare all'utente contenente tutte le info di un'artista
+			$informazioni = "Ecco alcune informazioni su <b>" . $dati['Nome'] . "</b>\n";
+
+			//variabili ausiliarie per comporre la stringa finale da restituire all'utente
+			$followers = "Followers -> <b>" . $dati['Followers'] . "</b>\n";
+			$popolarita = "Popolarità -> <b>" . $dati['Popolarità'] . "</b>\n";
+			$link = "Link a Spotify -> " . $dati['Link'] . "\n";
+			$generi = "Generi: \n";
+			for($i = 0; $i < count($dati['Generi']); $i++)
+				$generi .= "<b>  -".$dati['Generi'][$i]."</b>\n";
+
+			// composizione della risposta
+			$informazioni .= $followers;
+			$informazioni .= $popolarita;
+			$informazioni .= $link;
+			$informazioni .= $generi;
+
+			send($chat_id, $informazioni);
+			return true;
+		}
+		else
+		{
+			send($chat_id, 'Artista non trovato, riprovare!');
+			return false;
+		}
+	}
+	
 	function update_state($cid, $state)
 	{
 		$dati_utente_db = mysql_query("SELECT * FROM comando_eseguito WHERE cid = '$cid'");
