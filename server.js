@@ -54,8 +54,10 @@ app.get('/artist/:nomeArtista', (req, res) =>
   	      })
   	      .catch(function(err)
   	      {
-  	          console.log(err);
-  	          res.send(err);
+  	          if(err['statusCode'] == 401)
+                  res.send(err['error']);
+              else
+                  res.send(err);
   	      });
 	  }
 	  else if(req.query.type == 'info')
@@ -78,8 +80,12 @@ app.get('/artist/:nomeArtista', (req, res) =>
 	  		      info['Generi'] = generi;
 	  		      res.send(info);
 	  	      })
-	  	      .catch(function(err){
-	              res.send(err);
+	  	      .catch(function(err)
+            {
+	              if(err['statusCode'] == 401)
+                    res.send(err['error']);
+                else
+                    res.send(err);
 	  	      })
 	  }
 });  
@@ -105,7 +111,10 @@ app.get('/new-releases', (req, res) =>
       })
       .catch(function(err)
       {
-          res.send(err);
+          if(err['statusCode'] == 401)
+              res.send(err['error']);
+          else
+              res.send(err);
       })
 });
 
@@ -138,8 +147,10 @@ function getArtistTopTracks(IDArtista, response)
       })
       .catch(function(err)
       {
-          console.log(err);
-          response.send(err);
+          if(err['statusCode'] == 401)
+              res.send(err['error']);
+          else
+              res.send(err);
       })
 };
 
