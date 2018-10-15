@@ -84,6 +84,7 @@ app.get('/artist/:nomeArtista', (req, res) =>
 	  }
 });  
 
+//metodo che ritorna 5 nuovi album rilasciati nel mercato italiano
 app.get('/new-releases', (req, res) =>
 {
     let options = 
@@ -142,6 +143,7 @@ function getArtistTopTracks(IDArtista, response)
       })
 };
 
+//funzione per comporre il JSON che verrà poi restituito come risposta
 function getNewReleases(releases)
 {
     let datiAlbum = {
