@@ -19,7 +19,7 @@
 	    }
 
 	    curl_close($handle);
-
+	    
 	    // Decodifica della risposta JSON
 	    return json_decode($response, true);
 	}
