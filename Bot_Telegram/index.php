@@ -1,109 +1,82 @@
 <?php
-    include 'source.php';
+	include 'source.php';
 
-    switch ($text) {
-        case "/start":
-            send($cid, "Benvenuto $name,\nin 📀 MusicLyricBot 📀");
-
-            $keyboard = [
-                            ["Artista 🎤", "Genere 🎵"],
-                            ["Nuove uscite 🕒", "Testo canzone 📜"],
-                            ["Ascolta musica 🎶"],
+	switch ($text) {
+		case "/start":
+			if (checkIfUserExists($cid)) 
+				send($cid, "Bentornato in 📀 MusicLyricBot 📀, $name");
+			else
+				send($cid, "Benvenuto $name \nin 📀 MusicLyricBot 📀\nSe serve aiuto digita /help");
+				
+			$keyboard = [
+            				["Artista 🎤", "Genere 🎵"],
+                        	["Nuove uscite 🕒", "Testo canzone 📜"],
+                        	["Ascolta musica 🎶"],
                         ];
 
-            $key = array(
-                            "resize_keyboard" => true,
-                            "one_time_keyboard" => true,
-                            "keyboard" => $keyboard,
-                        );
-
-            keyboard($key, "Tastiera interattiva attivata !\nChe cosa vuoi cercare ?", $cid);
-            break;
+            markupKeyboard("Ecco le funzioni del bot", $keyboard);
+			break;
         case "/tastiera":
-            $keyboard = [
-                            ["Artista 🎤", "Genere 🎵"],
-                            ["Nuove uscite 🕒", "Testo canzone 📜"],
-                            ["Ascolta musica 🎶"],
+			$keyboard = [
+            				["Artista 🎤", "Genere 🎵"],
+                        	["Nuove uscite 🕒", "Testo canzone 📜"],
+                        	["Ascolta musica 🎶"],
                         ];
 
-            $key = array(
-                            "resize_keyboard" => true,
-                            "one_time_keyboard" => true,
-                            "keyboard" => $keyboard,
-                        );
-
-            keyboard($key, "Che cosa vuoi cercare ?", $cid);
-            break;
-        case "Artista 🎤":
-            $keyboard = [
-                            ["Canzoni più popolari 🔝", "Info 📰"],
-                            ["Indietro 🔙"],
+            markupKeyboard("Ecco le funzioni del bot", $keyboard);
+			break;
+		case "Artista 🎤":
+			$keyboard = [
+            				["Canzoni più popolari 🔝", "Info 📰"],
+            				["Indietro 🔙"],
                         ];
 
-            $key = array(
-                            "resize_keyboard" => true,
-                            "one_time_keyboard" => true,
-                            "keyboard" => $keyboard,
-                        );
-
-            keyboard($key, "Cosa vuoi sapere\ndi un artista ?",$cid);
-            break;
-        case "Canzoni più popolari 🔝":
-            send($cid, "Di che artista vuoi\ntrovare le canzoni\npiù popolari ?");
+            markupKeyboard("Cosa vuoi sapere\ndi un artista?", $keyboard);
+			break;
+		case "Canzoni più popolari 🔝":
+			send($cid, "Di che artista vuoi\ntrovare le canzoni\npiù popolari ?");
             update_state($cid, 1);
-            break;
-        case "Info 📰":
-            send($cid, "Di quale artista\nvuoi informazioni ?");
+			break;
+		case "Info 📰":
+			send($cid, "Di quale artista\nvuoi informazioni ?");
             update_state($cid, 2);
-            break;
-        case "Genere 🎵":
-            send($cid, "Che genere musicale\nstai cercando ?");
-            break;
-        case "Nuove uscite 🕒":
+			break;
+		case "Genere 🎵":
+			send($cid, "Che genere musicale\nstai cercando ?");
+			break;
+		case "Nuove uscite 🕒":
             getNewReleases();
-            break;
-        case "Testo canzone 📜":
-            send($cid, "Di che canzone vuoi\ntrovare il testo ?");
-            break;
-        case "Ascolta musica 🎶":
-            $keyboard = [
-                            ["Anteprima 💾", "Canzone completa 💽"],
-                            ["Indietro 🔙"],
+			break;
+		case "Testo canzone 📜":
+			send($cid, "Di che canzone vuoi\ntrovare il testo ?");
+			break;
+		case "Ascolta musica 🎶":
+			$keyboard = [
+            				["Anteprima 💾", "Canzone completa 💽"],
+            				["Indietro 🔙"],
                         ];
 
-            $key = array(
-                            "resize_keyboard" => true,
-                            "one_time_keyboard" => true,
-                            "keyboard" => $keyboard,
-                        );
-
-            keyboard($key, "Seleziona una\nmodalità di ascolto !",$cid);
-            break;
-        case "Anteprima 💾":
-            send($cid, "Di che canzone vuoi\nascoltare l'anteprima ?");
-            break;
-        case "Canzone completa 💽":
-            send($cid, "Che canzone vuoi ascoltare ?");
-            break;
-        case "Indietro 🔙":
-            $keyboard = [
-                            ["Artista 🎤", "Genere 🎵"],
-                            ["Nuove uscite 🕒", "Testo canzone 📜"],
-                            ["Ascolta musica 🎶"],
+            markupKeyboard("Seleziona una\nmodalità di ascolto!", $keyboard);
+			break;
+		case "Anteprima 💾":
+			send($cid, "Di che canzone vuoi\nascoltare l'anteprima ?");
+			break;
+		case "Canzone completa 💽":
+			send($cid, "Che canzone vuoi ascoltare ?");
+			break;
+		case "Indietro 🔙":
+			$keyboard = [
+            				["Artista 🎤", "Genere 🎵"],
+                        	["Nuove uscite 🕒", "Testo canzone 📜"],
+                        	["Ascolta musica 🎶"],
                         ];
 
-            $key = array(
-                            "resize_keyboard" => true,
-                            "one_time_keyboard" => true,
-                            "keyboard" => $keyboard,
-                        );
-
-            keyboard($key, "Che cosa vuoi cercare ?",$cid);
-            break;
-        case "/help":
-            send($cid, "Elenco comandi:\n1) /tastiera ⌨");
-            break;
-        default:
+            markupKeyboard("Pagina iniziale", $keyboard);
+			break;
+		case "/help":
+			send($cid, "Elenco comandi:\n1) /tastiera ⌨");
+			break;
+		default:
             $state = getState($cid);
             switch($state)
             {
@@ -121,5 +94,16 @@
                     send($cid, "Elemento non trovato ❌\nDigita /help per aprire i comnadi.");
             }
             break;
-    }
+	}
+
+	function markupKeyboard($messaggio, $keyboard)
+	{
+		$key = array(
+            			"resize_keyboard" => true,
+            			"one_time_keyboard" => true,
+                    	"keyboard" => $keyboard,
+                    );
+
+		keyboard($key, $messaggio, $GLOBALS['cid']);
+	}
 ?>
