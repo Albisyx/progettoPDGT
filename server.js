@@ -50,7 +50,9 @@ app.get('/artist/:nomeArtista', (req, res) =>
       	rp(artistIDOptions)
   	      .then(function(data)
   	      {
-  	          getArtistTopTracks(data['artists']['items'][0]['id'], res);
+              let ID = data['artists']['items'][0]['id'];
+              let artistName = data['artists']['items'][0]['name'];
+  	          getArtistTopTracks(ID, artistName, res);
   	      })
   	      .catch(function(err)
   	      {
@@ -120,7 +122,7 @@ app.get('/new-releases', (req, res) =>
 
 // funzione che crea e restituisce il file json contenente le top tracks dato 
 // l'id di un'artista precedentemente ricavato
-function getArtistTopTracks(IDArtista, response)
+function getArtistTopTracks(IDArtista, nomeArtista, response)
 {
     // variabile per effettuare la seconda chiamata alle API di spotify
     let topTracksOptions = 
@@ -137,7 +139,8 @@ function getArtistTopTracks(IDArtista, response)
       .then(function(data)
       {
           let topTracks = {
-              tracks : []
+              tracks : [],
+              nome-artista : nomeArtista
           };
 
           for(item in data['tracks'])
