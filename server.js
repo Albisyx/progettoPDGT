@@ -140,7 +140,7 @@ function getArtistTopTracks(IDArtista, nomeArtista, response)
       {
           let topTracks = {
               tracks : [],
-              nome-artista : nomeArtista
+              nome_artista : nomeArtista
           };
 
           for(item in data['tracks'])
