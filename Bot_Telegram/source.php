@@ -42,10 +42,14 @@
 
 		if(!empty($dati))
 		{
+        	$informazioni = "🔝 Ecco le canzoni più popolari di " . $dati['nome_artista'] . " 🔝:\n";
+
 			for($i = 0; $i < count($dati['tracks']); $i++)
 				$nomiCanzoni .= "<b>".($i + 1).")</b> ".$dati['tracks'][$i]."\n";
 
-			send($chat_id, $nomiCanzoni);
+			$informazioni .= $nomiCanzoni;
+
+			send($chat_id, $informazioni);
 			$esito = true;
 		}
 		else
@@ -73,7 +77,7 @@
 			$link = "📍 Link a Spotify -> <b>" . $dati['Link'] . "</b>\n";
 			$generi = "💽 Generi: \n";
 			for($i = 0; $i < count($dati['Generi']); $i++)
-				$generi .= "<b>      - ".$dati['Generi'][$i]."</b>\n";
+				$generi .= "<b>       - ".$dati['Generi'][$i]."</b>\n";
 
 			// composizione della risposta
 			$informazioni .= $followers;
