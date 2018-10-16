@@ -65,15 +65,15 @@
 		if(!empty($dati))
 		{
 			// stringa da inviare all'utente contenente tutte le info di un'artista
-			$informazioni = "Ecco alcune informazioni su <b>" . $dati['Nome'] . "</b>\n";
+			$informazioni = "Ecco alcune informazioni su <b>\"" . $dati['Nome'] . "\"</b>:\n";
 
 			//variabili ausiliarie per comporre la stringa finale da restituire all'utente
-			$followers = "Followers -> <b>" . $dati['Followers'] . "</b>\n";
-			$popolarita = "Popolarità -> <b>" . $dati['Popolarità'] . "</b>\n";
-			$link = "Link a Spotify -> <b>" . $dati['Link'] . "</b>\n";
-			$generi = "Generi: \n";
+			$followers = "💙 Followers -> <b>" . $dati['Followers'] . "</b>\n";
+			$popolarita = "📊 Popolarità -> <b>" . $dati['Popolarità'] . "</b>\n";
+			$link = "📍 Link a Spotify -> <b>" . $dati['Link'] . "</b>\n";
+			$generi = "💽 Generi: \n";
 			for($i = 0; $i < count($dati['Generi']); $i++)
-				$generi .= "<b>  -".$dati['Generi'][$i]."</b>\n";
+				$generi .= "<b>      - ".$dati['Generi'][$i]."</b>\n";
 
 			// composizione della risposta
 			$informazioni .= $followers;
@@ -114,4 +114,25 @@
 
 		send($GLOBALS['cid'], $nuoveUscite);
 	}
+/*
+	function update_state($cid, $state)
+	{
+		$dati_utente_db = mysql_query("SELECT * FROM comando_eseguito WHERE cid = '$cid'");
+		$array = mysql_fetch_array($dati_utente_db);
+
+		if($array[cid] == $cid)
+			mysql_query("UPDATE comando_eseguito SET comando = '$state' WHERE cid = '$cid'");
+		else
+			mysql_query("INSERT INTO comando_eseguito (cid, comando) VALUES ('$cid', '$state')");
+	}
+
+	function getState($cid)
+	{
+		$risultato = mysql_query("SELECT comando FROM comando_eseguito WHERE cid='$cid'");
+		$row = mysql_fetch_assoc($risultato);
+		
+		$stato = $row['comando'];
+		
+		return $stato;
+	}*/
 ?>
