@@ -240,7 +240,7 @@ function getLyrics(artistName, trackName, response)
 	{
 		url = 'https://api.lyrics.ovh/v1/' + encodeURIComponent(artistName) + '/' + encodeURIComponent(trackName),
 		json: true
-	}
+	};
 	rp(lyricsOptions)
 	  .then(function(data)
 	  {
