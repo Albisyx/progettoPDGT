@@ -120,6 +120,23 @@ app.get('/new-releases', (req, res) =>
       })
 });
 
+// percorso che ritorna il testo di una canzone
+// richiede due parametry, ovvero il nome dell'artista e quello della canzone
+app.get('/lyrics', (req, res) =>
+{
+	if(req.query.artist == undefined && req.query.track_name == undefined)
+	{
+		let error = {
+			internal_error : "Nome dell'artista e della relativa canzone mancanti"
+		};
+		res.status(500).send(error);
+	}
+	else if(req.query.artist == undefined && req.query.track_name != undefined)
+		getArtistFromTrack(req.query.track_name, res);
+	else if(req.query.artist != undefined && req.query.track_name != undefined)
+		getLyrics(req.query.artist, req.query.track_name, res);
+})
+
 // funzione che crea e restituisce il file json contenente le top tracks dato 
 // l'id di un'artista precedentemente ricavato
 function getArtistTopTracks(IDArtista, nomeArtista, response)
@@ -186,6 +203,54 @@ function getNewReleases(releases)
 
     return datiAlbum;
 };
+
+// funzione ausiliaria per trovare il nome di un'artista, partendo dal nome di una sua canzone
+function getArtistFromTrack(trackName, res)
+{
+	let trackOptions =
+    {
+        uri: 'https://api.spotify.com/v1/search?q=' + encodeURIComponent(trackName) +'&type=track&market=IT&limit=1',
+        headers: 
+            {
+                'Authorization': 'Bearer ' + spotifyApi.getAccessToken()
+            },
+        json: true
+    };
+
+    rp(trackOptions)
+      .then(function(data)
+      {
+          if(data['tracks']['items'].length > 0)
+              getLyrics(data['tracks']['items'][0]['artists']['name'], encodeURIComponent(trackName), res);
+          else
+          	  res.status(404).send({error : 'Artista non trovato partendo da questa canzone'});
+      })
+      .catch(function(err)
+      {
+          if(err['statusCode'] == 401)
+              res.send(err['error']);
+          else
+              res.send(err);
+      })
+}
+
+function getLyrics(artistName, trackName, response)
+{
+	let url = 'https://api.lyrics.ovh/v1/' + artistName + '/' + trackName;
+
+	rp(url)
+	  .then(function(data)
+	  {
+	  	  if(!data['error'])
+	  	  	  response.status(200).send(data['lyrics']);
+	  	  else
+	  	  	  response.status(404).send({error : 'Lyrics non trovato'});
+	  })
+	  .catch(function(err)
+      {
+          response.send(err);
+      })
+}
 
 app.listen(PORT, function()
 {
