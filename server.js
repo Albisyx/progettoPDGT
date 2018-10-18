@@ -220,7 +220,7 @@ function getArtistFromTrack(trackName, res)
     rp(trackOptions)
       .then(function(data)
       {
-          if(data['tracks']['items'].length)
+          if(data['tracks']['items'] != [])
               getLyrics(data['tracks']['items'][0]['artists']['name'], encodeURIComponent(trackName), res);
           else
           	  res.status(404).send({error : 'Artista non trovato partendo da questa canzone'});
