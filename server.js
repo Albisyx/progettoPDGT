@@ -236,7 +236,7 @@ function getArtistFromTrack(trackName, res)
 
 function getLyrics(artistName, trackName, response)
 {
-	let lyricsOptions
+	let lyricsOptions =
 	{
 		url: 'https://api.lyrics.ovh/v1/' + encodeURIComponent(artistName) + '/' + encodeURIComponent(trackName),
 		json: true
