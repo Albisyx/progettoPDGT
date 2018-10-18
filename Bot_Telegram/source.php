@@ -42,10 +42,14 @@
 
 		if(!empty($dati))
 		{
+        	$informazioni = "🔝 Ecco le canzoni più popolari di " . $dati['nome_artista'] . " 🔝\n";
+
 			for($i = 0; $i < count($dati['tracks']); $i++)
 				$nomiCanzoni .= "<b>".($i + 1).")</b> ".$dati['tracks'][$i]."\n";
 
-			send($chat_id, $nomiCanzoni);
+			$informazioni .= $nomiCanzoni;
+
+			send($chat_id, $informazioni);
 			$esito = true;
 		}
 		else
@@ -73,7 +77,7 @@
 			$link = "📍 Link a Spotify -> <b>" . $dati['Link'] . "</b>\n";
 			$generi = "💽 Generi: \n";
 			for($i = 0; $i < count($dati['Generi']); $i++)
-				$generi .= "<b>      - ".$dati['Generi'][$i]."</b>\n";
+				$generi .= "<b>       - ".$dati['Generi'][$i]."</b>\n";
 
 			// composizione della risposta
 			$informazioni .= $followers;
@@ -97,42 +101,19 @@
 		$url = 'https://progetto-pdgt.herokuapp.com/new-releases';
 		$dati = http_request($url);
 
-		$nuoveUscite = "Ecco a te 5 nuovi album:\n";
+		$nuoveUscite = "💿 Ecco a te 5 nuovi album 💿\n";
 
 		for($i = 0; $i < count($dati['albums']); $i++)
 		{
 			$item = $dati['albums'][$i];
-			$nuoveUscite .= "<b>Tipo:</b> " . $item['Tipo album'] . "\n";
-			$nuoveUscite .= "<b>Nome:</b> " . $item['Nome'] . "\n";/*
-			for($i = 0; $i < count($item['Artisti']); $i++)
-				$nuoveUscite .= "<b>  -".$dati['Artisti'][$i]."</b>\n";*/
-			$nuoveUscite .= "<b>Data di rilascio:</b> " . $item['Data di rilascio'] . "\n";
-			$nuoveUscite .= "<b>Link:</b> " . $item['Link'] . "\n";
+			$nuoveUscite .= "<b>Tipo 🎶:</b> " . $item['Tipo album'] . "\n";
+			$nuoveUscite .= "<b>Nome 📄:</b> " . $item['Nome'] . "\n";
+			$nuoveUscite .= "<b>Data di rilascio 📅:</b> " . $item['Data di rilascio'] . "\n";
+			$nuoveUscite .= "<b>Link 📍:</b> " . $item['Link'] . "\n";
 			//separo con una linea vuota, un nuovo album dal successivo
 			$nuoveUscite .= "\n";
 		}
 
 		send($GLOBALS['cid'], $nuoveUscite);
 	}
-/*
-	function update_state($cid, $state)
-	{
-		$dati_utente_db = mysql_query("SELECT * FROM comando_eseguito WHERE cid = '$cid'");
-		$array = mysql_fetch_array($dati_utente_db);
-
-		if($array[cid] == $cid)
-			mysql_query("UPDATE comando_eseguito SET comando = '$state' WHERE cid = '$cid'");
-		else
-			mysql_query("INSERT INTO comando_eseguito (cid, comando) VALUES ('$cid', '$state')");
-	}
-
-	function getState($cid)
-	{
-		$risultato = mysql_query("SELECT comando FROM comando_eseguito WHERE cid='$cid'");
-		$row = mysql_fetch_assoc($risultato);
-		
-		$stato = $row['comando'];
-		
-		return $stato;
-	}*/
 ?>
