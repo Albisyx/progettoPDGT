@@ -49,6 +49,7 @@
 			break;
 		case "Testo canzone 📜":
 			send($cid, "Di che canzone vuoi\ntrovare il testo ?");
+			update_state($cid, 3);// da mettere n quello con solo il nome della canzone
 			break;
 		case "Ascolta musica 🎶":
 			$keyboard = [
@@ -90,6 +91,11 @@
                     if($esito)
                         update_state($cid, 0);
                     break;
+                case 3:
+               		$esito = getLyrics(1, $text);
+               		if($esito)
+               			update_state($cid, 0);
+               		break;
                 default:
                     send($cid, "Elemento non trovato ❌\nDigita /help per aprire i comnadi.");
             }
@@ -106,4 +112,4 @@
 
 		keyboard($key, $messaggio, $GLOBALS['cid']);
 	}
-?>
+?>

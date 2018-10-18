@@ -116,4 +116,51 @@
 
 		send($GLOBALS['cid'], $nuoveUscite);
 	}
+
+	// funzione che si interfaccia al percorso dell'API /lyrics che restituisce il testo di una canzone
+	function getLyrics($tipoRichiesta, $nomeCanzone, $nomeArtista = '')
+	{
+		$url = 'https://progetto-pdgt.herokuapp.com/lyrics';
+
+		switch($tipoRichiesta)
+		{
+			case 1:
+				$url .= '?track_name='.urlencode($nomeCanzone);
+				$dati = http_request($url);
+				if(!$dati['error'])
+				{
+					$artista = $dati['artist'];
+					$testo = $dati['lyrics'];
+
+					$messaggio = "Ecco il testo per ".$artista." - ".$nomeCanzone.":\n\n".$testo;
+					send($GLOBALS['cid'], $messaggio);
+					$esito =  true;
+				}
+				else
+				{
+					send($GLOBALS['cid'], "Canzone non trovata");
+					$esito = false;
+				}
+				break;
+			case 2:
+				$url .= '?artist='.urlencode($nomeArtista).'&track_name='.urlencode($nomeCanzone);
+				$dati = http_request($url);
+
+				if(!$dati['error'])
+				{
+					$testo = $dati['lyrics'];
+
+					$messaggio = "Ecco il testo per ".$nomeArtista." - ".$nomeCanzone.":\n\n".$testo;
+					send($GLOBALS['cid'], $messaggio);
+					$esito =  true;
+				}
+				else
+				{
+					send($GLOBALS['cid'], "Canzone non trovata");
+					$esito = false;
+				}				
+				break;
+		}
+		return $esito;
+	}
 ?>
