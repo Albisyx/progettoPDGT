@@ -220,7 +220,7 @@ function getArtistFromTrack(trackName, res)
     rp(trackOptions)
       .then(function(data)
       {
-          if(data['tracks']['items'] != [])
+          if(data['tracks']['total'] == 0)
               getLyrics(data['tracks']['items'][0]['artists']['name'], encodeURIComponent(trackName), res);
           else
           	  res.status(404).send({error : 'Artista non trovato partendo da questa canzone'});
@@ -241,13 +241,11 @@ function getLyrics(artistName, trackName, response)
 		url: 'https://api.lyrics.ovh/v1/' + encodeURIComponent(artistName) + '/' + encodeURIComponent(trackName),
 		json: true
 	};
+
 	rp(lyricsOptions)
 	  .then(function(data)
 	  {
-	  	  if(!data['error'])
-	  	  	  response.status(200).send(data['lyrics']);
-	  	  else
-	  	  	  response.status(404).send();
+	  	  response.status(200).send(data['lyrics']);
 	  })
 	  .catch(function(err)
       {
