@@ -245,7 +245,11 @@ function getLyrics(artistName, trackName, response)
 	rp(lyricsOptions)
 	  .then(function(data)
 	  {
-	  	  response.status(200).send(data['lyrics']);
+	  	  let result = {
+	  	  	  artist : artistName,
+	  	  	  lyrics : data['lyrics']
+	  	  };
+	  	  response.status(200).send(result);
 	  })
 	  .catch(function(err)
       {
