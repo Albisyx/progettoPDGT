@@ -132,8 +132,7 @@ app.get('/lyrics', (req, res) =>
 		res.status(500).send(error);
 	}
 	else if(req.query.artist == undefined && req.query.track_name != undefined)
-		res.send("qwerty");
-		//getArtistFromTrack(req.query.track_name, res);
+		getArtistFromTrack(req.query.track_name, res);
 	else if(req.query.artist != undefined && req.query.track_name != undefined)
 		getLyrics(req.query.artist, req.query.track_name, res);
 })
@@ -212,16 +211,16 @@ function getArtistFromTrack(trackName, res)
     {
         uri: 'https://api.spotify.com/v1/search?q=' + encodeURIComponent(trackName) +'&type=track&market=IT&limit=1',
         headers: 
-            {
+        {
                 'Authorization': 'Bearer ' + spotifyApi.getAccessToken()
-            },
+        },
         json: true
     };
 
     rp(trackOptions)
       .then(function(data)
       {
-          if(data['tracks']['items'].length > 0)
+          if(data['tracks']['items'].length)
               getLyrics(data['tracks']['items'][0]['artists']['name'], encodeURIComponent(trackName), res);
           else
           	  res.status(404).send({error : 'Artista non trovato partendo da questa canzone'});
