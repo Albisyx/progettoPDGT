@@ -60,6 +60,10 @@
 			send($cid, "Che canzone vuoi cercare ?");
 			update_state($cid, 3);
 			break;
+		case "Digita il nome dell'artista 👱 e la canzone 🎼":
+			send($cid, "Che artista e canzone vuoi cercare ?");
+			// inserisci funzione di ricerca
+			break;
 		case "Ascolta musica 🎶":
 			$keyboard = [
             				["Anteprima 💾", "Canzone completa 💽"],
