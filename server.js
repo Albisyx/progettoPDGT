@@ -242,7 +242,7 @@ function getLyrics(artistName, trackName, response)
 	  .then(function(data)
 	  {
 	  	  if(!data['error'])
-	  	  	  response.status(200).send(data['lyrics']);
+	  	  	  response.status(200).send(data);
 	  	  else
 	  	  	  response.status(404).send({error : 'Lyrics non trovato'});
 	  })
