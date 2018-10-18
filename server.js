@@ -236,7 +236,7 @@ function getArtistFromTrack(trackName, res)
 
 function getLyrics(artistName, trackName, response)
 {
-	let url = 'https://api.lyrics.ovh/v1/' + artistName + '/' + trackName;
+	let url = 'https://api.lyrics.ovh/v1/' + encodeURIComponent(artistName) + '/' + encodeURIComponent(trackName);
 
 	rp(url)
 	  .then(function(data)
