@@ -212,7 +212,7 @@ function getArtistFromTrack(trackName, res)
         uri: 'https://api.spotify.com/v1/search?q=' + encodeURIComponent(trackName) +'&type=track&market=IT&limit=1',
         headers: 
         {
-                'Authorization': 'Bearer ' + spotifyApi.getAccessToken()
+             'Authorization': 'Bearer ' + spotifyApi.getAccessToken()
         },
         json: true
     };
@@ -236,13 +236,16 @@ function getArtistFromTrack(trackName, res)
 
 function getLyrics(artistName, trackName, response)
 {
-	let url = 'https://api.lyrics.ovh/v1/' + encodeURIComponent(artistName) + '/' + encodeURIComponent(trackName);
-
-	rp(url)
+	let lyricsOptions
+	{
+		url = 'https://api.lyrics.ovh/v1/' + encodeURIComponent(artistName) + '/' + encodeURIComponent(trackName),
+		json: true
+	}
+	rp(lyricsOptions)
 	  .then(function(data)
 	  {
 	  	  if(!data['error'])
-	  	  	  response.status(200).send(data);
+	  	  	  response.status(200).send(data['lyrics']);
 	  	  else
 	  	  	  response.status(404).send({error : 'Lyrics non trovato'});
 	  })
