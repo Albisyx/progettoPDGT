@@ -132,7 +132,8 @@ app.get('/lyrics', (req, res) =>
 		res.status(500).send(error);
 	}
 	else if(req.query.artist == undefined && req.query.track_name != undefined)
-		getArtistFromTrack(req.query.track_name, res);
+		res.send("qwerty");
+		//getArtistFromTrack(req.query.track_name, res);
 	else if(req.query.artist != undefined && req.query.track_name != undefined)
 		getLyrics(req.query.artist, req.query.track_name, res);
 })
