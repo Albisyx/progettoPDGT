@@ -48,8 +48,21 @@
             getNewReleases();
 			break;
 		case "Testo canzone 📜":
-			send($cid, "Di che canzone vuoi\ntrovare il testo ?");
-			update_state($cid, 3);// da mettere n quello con solo il nome della canzone
+			$keyboard = [
+            				["Digita il nome della canzone 🎼"],
+            				["Digita il nome dell'artista 👱 e la canzone 🎼"],
+            				["Indietro 🔙"],
+                        ];
+
+            markupKeyboard("Seleziona una\nmodalità di ricerca!", $keyboard);
+			break;
+		case "Digita il nome della canzone 🎼":
+			send($cid, "Che canzone vuoi cercare ?");
+			update_state($cid, 3);
+			break;
+		case "Digita il nome dell'artista 👱 e la canzone 🎼":
+			send($cid, "Che artista e canzone vuoi cercare ?");
+			// inserisci funzione di ricerca
 			break;
 		case "Ascolta musica 🎶":
 			$keyboard = [
@@ -112,4 +125,4 @@
 
 		keyboard($key, $messaggio, $GLOBALS['cid']);
 	}
-?>
+?>

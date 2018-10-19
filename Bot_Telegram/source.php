@@ -132,7 +132,7 @@
 					$artista = $dati['artist'];
 					$testo = $dati['lyrics'];
 
-					$messaggio = "Ecco il testo per ".$artista." - ".$nomeCanzone.":\n\n".$testo;
+					$messaggio = "📜 Ecco il testo di <b>".$nomeCanzone."</b> di <b>".$artista."</b>:\n\n".$testo;
 					send($GLOBALS['cid'], $messaggio);
 					$esito =  true;
 				}
