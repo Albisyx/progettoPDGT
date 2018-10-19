@@ -197,7 +197,7 @@ function getNewReleases(releases)
             "ID"               : item.id,
             "Artisti"          : artisti,
             "Data di rilascio" : item.release_date,
-            "Link"             : item.artists.external_urls.spotify
+            "Link"             : item.external_urls.spotify
         });
     })
 
