@@ -255,7 +255,7 @@ function getLyrics(artistName, trackName, response)
 	  .catch(function(err)
       {
       	if(err['statusCode'] == 404)
-          	response.send({error : 'Lyrics non trovato', link: lyricsOptions['url']});
+          	response.send({error : 'Lyrics non trovato'});
         else
         	response.send(err);
       })
