@@ -132,10 +132,15 @@ app.get('/lyrics', (req, res) =>
 		res.status(500).send(error);
 	}
 	else if(req.query.artist == undefined && req.query.track_name != undefined)
-		getArtistFromTrack(req.query.track_name, res);
+		getInfoFromTrack('a', req.query.track_name, res);
 	else if(req.query.artist != undefined && req.query.track_name != undefined)
 		getLyrics(req.query.artist, req.query.track_name, res);
-})
+});
+
+app.get('/listen/:trackTitle', (req, res) => 
+{
+	getInfoFromTrack('p', req.params.trackTitle, res);
+});
 
 // funzione che crea e restituisce il file json contenente le top tracks dato 
 // l'id di un'artista precedentemente ricavato
@@ -206,7 +211,10 @@ function getNewReleases(releases)
 };
 
 // funzione ausiliaria per trovare il nome di un'artista, partendo dal nome di una sua canzone
-function getArtistFromTrack(trackName, res)
+// il parametro mod viene usato in quanto la seguente funzione viene invocata in due scopi diversi:
+// per mod == 'a' -> la funzione invoca getLyrics passandole come parametro il nome dell'artista della canzone trovata
+// per mod ?? 'p' -> la funzione restituisce un JSON con alcune informazioni sulla canzone e in particolare il link per ascoltare 30 secondi
+function getInfoFromTrack(mod, trackName, res)
 {
 	let trackOptions =
     {
@@ -221,10 +229,26 @@ function getArtistFromTrack(trackName, res)
     rp(trackOptions)
       .then(function(data)
       {
-          if(data['tracks']['total'] > 0)
-              getLyrics(data['tracks']['items'][0]['artists'][0]['name'], encodeURIComponent(trackName), res);
+      	  if(data['tracks']['total'] > 0)
+      	  {
+          	  if(mod == 'a')
+                  getLyrics(data['tracks']['items'][0]['artists'][0]['name'], encodeURIComponent(trackName), res);
+              else if(mod == 'p')
+              {
+              	  let track = data['tracks']['items'][0];
+              	  let trackInfo = {
+              	  	  nome : track.name,
+              	  	  artista : track.artists[0].name,
+              	  	  album : track.album.name,
+              	  	  preview_link : track.preview_url,
+              	  	  track_link : track.external_urls.spotify
+              	  };
+
+              	  res.status(200).send(trackInfo);
+           	  }
+          }
           else
-          	  res.send({error : 'Artista non trovato partendo da questa canzone'});
+          	  res.send({error : 'Canzone non trovata'});
       })
       .catch(function(err)
       {
