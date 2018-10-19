@@ -73,7 +73,7 @@ app.get('/artist/:nomeArtista', (req, res) =>
 	  	      	  info['Nome'] = artist['name'];
 	  	      	  info['Followers'] = artist['followers']['total'];
 	  	      	  info['Popolarità'] = artist['popularity'];
-	              info['Link'] = artist['uri'];
+	              info['Link'] = artist['external_urls']['spotify'];
 
 	  	      	  let generi = [];
 	  	      	  for(let i = 0; i < artist['genres'].length; i++) 
