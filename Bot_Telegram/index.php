@@ -4,26 +4,14 @@
 	switch ($text) {
 		case "/start":
 			if (checkIfUserExists($cid)) 
-				send($cid, "Bentornato in 📀 MusicLyricBot 📀, $name");
+				send($cid, "Bentornato $name in\n📀 MusicLyricBot 📀");
 			else
-				send($cid, "Benvenuto $name \nin 📀 MusicLyricBot 📀\nSe serve aiuto digita /help");
+				send($cid, "Benvenuto $name in\n📀 MusicLyricBot 📀\nSe serve aiuto digita <b>/help</b>");
 				
-			$keyboard = [
-            				["Artista 🎤", "Genere 🎵"],
-                        	["Nuove uscite 🕒", "Testo canzone 📜"],
-                        	["Ascolta musica 🎶"],
-                        ];
-
-            markupKeyboard("Ecco le funzioni del bot", $keyboard);
+			tastieraPrincipale("Ecco le funzioni del bot");
 			break;
         case "/tastiera":
-			$keyboard = [
-            				["Artista 🎤", "Genere 🎵"],
-                        	["Nuove uscite 🕒", "Testo canzone 📜"],
-                        	["Ascolta musica 🎶"],
-                        ];
-
-            markupKeyboard("Ecco le funzioni del bot", $keyboard);
+			tastieraPrincipale("Ecco le funzioni del bot");
 			break;
 		case "Artista 🎤":
 			$keyboard = [
@@ -31,10 +19,10 @@
             				["Indietro 🔙"],
                         ];
 
-            markupKeyboard("Cosa vuoi sapere\ndi un artista?", $keyboard);
+            markupKeyboard("Cosa vuoi sapere\ndi un artista ?", $keyboard);
 			break;
 		case "Canzoni più popolari 🔝":
-			send($cid, "Di che artista vuoi\ntrovare le canzoni\npiù popolari ?");
+			send($cid, "Di quale artista vuoi\ntrovare le canzoni\npiù popolari ?");
             update_state($cid, 1);
 			break;
 		case "Info 📰":
@@ -48,70 +36,70 @@
             getNewReleases();
 			break;
 		case "Testo canzone 📜":
-			$keyboard = [
-            				["Digita il nome della canzone 🎼"],
-            				["Digita il nome dell'artista 👱 e la canzone 🎼"],
-            				["Indietro 🔙"],
-                        ];
-
-            markupKeyboard("Seleziona una\nmodalità di ricerca!", $keyboard);
-			break;
-		case "Digita il nome della canzone 🎼":
-			send($cid, "Che canzone vuoi cercare ?");
+			$messaggio = "Per trovare il taesto di una canzone\npuoi procedere in due modi:\n"
+						  ."<b>1)</b> inserendo solo il nome della <i>canzone</i>\n"
+						  ."<b>2)</b> inserendo sia il nome della <i>canzone</i> che quello dell'<i>artista</i>\n\n"
+						  ."Per l'opzione 2, è necessario attenersi a questo formato" 
+						  ." -> <b>nome_artista:nome_canzone</b>";
+			send($cid, $messaggio);
 			update_state($cid, 3);
 			break;
-		case "Digita il nome dell'artista 👱 e la canzone 🎼":
-			send($cid, "Che artista e canzone vuoi cercare ?");
-			// inserisci funzione di ricerca
-			break;
 		case "Ascolta musica 🎶":
-			$keyboard = [
-            				["Anteprima 💾", "Canzone completa 💽"],
-            				["Indietro 🔙"],
-                        ];
-
-            markupKeyboard("Seleziona una\nmodalità di ascolto!", $keyboard);
-			break;
-		case "Anteprima 💾":
-			send($cid, "Di che canzone vuoi\nascoltare l'anteprima ?");
-			break;
-		case "Canzone completa 💽":
-			send($cid, "Che canzone vuoi ascoltare ?");
+			send($cid, "Quale canzone vuoi ascoltare ?");
+			update_state($cid, 4);
 			break;
 		case "Indietro 🔙":
-			$keyboard = [
-            				["Artista 🎤", "Genere 🎵"],
-                        	["Nuove uscite 🕒", "Testo canzone 📜"],
-                        	["Ascolta musica 🎶"],
-                        ];
-
-            markupKeyboard("Pagina iniziale", $keyboard);
+			tastieraPrincipale("Pagina iniziale");
+			break;
+		case "Si ✅":
+			if(getState($cid) == 3 || getState($cid) == 4)
+				update_state($cid, 0);
+			else
+				send($cid, "Comando non disponibile\nin questa situazione.");
+			tastieraPrincipale("");
+			break;
+		case "No ❌":
+			if(getState($cid) == 3 || getState($cid) == 4)
+				send($cid, "Ok, riproviamo allora !");
+			else
+			{
+				send($cid, "Comando non disponibile\nin questa situazione.");
+				tastieraPrincipale("");
+			}
 			break;
 		case "/help":
-			send($cid, "Elenco comandi:\n1) /tastiera ⌨");
+			send($cid, "<b>Elenco comandi:\n1)</b> /tastiera ⌨");
 			break;
 		default:
             $state = getState($cid);
+            $esito = true;
             switch($state)
             {
                 case 1:
                     $esito = topTracks($cid, $text);
-                    if($esito)
-                        update_state($cid, 0);
                     break;
                 case 2:
                     $esito = getArtistInfo($cid, $text);
-                    if($esito)
-                        update_state($cid, 0);
                     break;
                 case 3:
-               		$esito = getLyrics(1, $text);
-               		if($esito)
-               			update_state($cid, 0);
+               		$esito = getLyrics($text);
+               		break;
+               	case 4:
+               		$esito = listenTrack($text);
                		break;
                 default:
-                    send($cid, "Elemento non trovato ❌\nDigita /help per aprire i comnadi.");
+                    send($cid, "Elemento non trovato ❌\nDigita <b>/help</b> per aprire i comnadi.");
             }
+            if(($state == 3 || $state == 4) && $esito)
+            {
+            	$keyboard = [
+            					["Si ✅", "No ❌"],
+            					["Indietro 🔙"],
+                        	];
+               	markupKeyboard("La canzone trovata,\nè quella che stavi cercando ?", $keyboard);
+            }
+            else if($esito)
+            	tastieraPrincipale("Serve altro?");
             break;
 	}
 
@@ -124,5 +112,16 @@
                     );
 
 		keyboard($key, $messaggio, $GLOBALS['cid']);
+	}
+	
+	function tastieraPrincipale($messaggio)
+	{
+		$keyboard = [
+            			["Artista 🎤", "Genere 🎵"],
+                       	["Nuove uscite 🕒", "Testo canzone 📜"],
+                       	["Ascolta musica 🎶"],
+                    ];
+
+        markupKeyboard($messaggio, $keyboard);
 	}
 ?>
