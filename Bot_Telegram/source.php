@@ -124,7 +124,7 @@
 			die();
 		}
 
-		$nuoveUscite = "💿 Ecco a te 5 nuovi album 💿\n";
+		$nuoveUscite = "💿 Ecco a te 5 album appena usciti 💿\n";
 
 		for($i = 0; $i < count($dati['albums']); $i++)
 		{
