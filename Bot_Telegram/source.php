@@ -49,6 +49,11 @@
 
 		if(!empty($dati))
 		{
+			if($dati['error']['status'] == 401)
+			{
+				send($cid, "Servizio momentaneamente non disponibile");
+				die();
+			}
         	$informazioni = "🔝 Ecco le canzoni più popolari di <b>" . $dati['nome_artista'] . "</b> 🔝\n";
 
 			for($i = 0; $i < count($dati['tracks']); $i++)
@@ -75,6 +80,11 @@
 
 		if(!empty($dati))
 		{
+			if($dati['error']['status'] == 401)
+			{
+				send($cid, "Servizio momentaneamente non disponibile");
+				die();
+			}
 			// stringa da inviare all'utente contenente tutte le info di un'artista
 			$informazioni = "📰 Ecco alcune informazioni su <b>" . $dati['Nome'] . "</b>:\n";
 
@@ -107,6 +117,12 @@
 	{
 		$url = 'https://progetto-pdgt.herokuapp.com/new-releases';
 		$dati = http_request($url);
+
+		if($dati['error']['status'] == 401)
+		{
+			send($cid, "Servizio momentaneamente non disponibile");
+			die();
+		}
 
 		$nuoveUscite = "💿 Ecco a te 5 nuovi album 💿\n";
 
@@ -147,7 +163,10 @@
 			}
 			else
 			{
-				send($GLOBALS['cid'], "Canzone non trovata !");
+				if($dati['error']['status'] == 404)
+					send($GLOBALS['cid'], "Canzone non trovata!");
+				else if($dati['error']['status'] == 401)
+					send($cid, "Servizio momentaneamente non disponibile");
 				$esito = false;
 			}
 		}
@@ -168,7 +187,10 @@
 			}
 			else
 			{
-				send($GLOBALS['cid'], "Canzone non trovata !");
+				if($dati['error']['status'] == 404)
+					send($GLOBALS['cid'], "Canzone non trovata!");
+				else if($dati['error']['status'] == 401)
+					send($cid, "Servizio momentaneamente non disponibile");
 				$esito = false;
 			}				
 		}
@@ -195,8 +217,11 @@
 		}
 		else
 		{
-			send($GLOBALS['cid'], "Canzone non trovata !");
-			return false;
+			if($dati['error']['status'] == 404)
+				send($GLOBALS['cid'], "Canzone non trovata!");
+			else if($dati['error']['status'] == 401)
+				send($cid, "Servizio momentaneamente non disponibile");
+			$esito = false;
 		}
 	}
 ?>
