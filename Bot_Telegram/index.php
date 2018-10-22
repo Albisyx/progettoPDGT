@@ -55,7 +55,7 @@
 			if(getState($cid) == 3 || getState($cid) == 4)
 			{
 				update_state($cid, 0);
-				tastieraPrincipale("Perfetto!\nEcco altre cose che upoi fare:");
+				tastieraPrincipale("Perfetto!\nEcco altre cose che poi fare:");
 			}
 			else
 				tastieraPrincipale("Comando non disponibile\nin questa situazione");
@@ -64,7 +64,7 @@
 			if(getState($cid) == 3 || getState($cid) == 4)
 				send($cid, "Ok, riproviamo allora!");
 			else
-				tastieraPrincipale("Comando non disponibile\nin questa situazione.");
+				tastieraPrincipale("Comando non disponibile\nin questa situazione");
 			break;
 		default:
             $state = getState($cid);
