@@ -70,16 +70,16 @@ app.get('/artist/:nomeArtista', (req, res) =>
 	  	      .then(function(data)
 	  	      {
 	  	      	  let artist = data['artists']['items'][0];
-	  	      	  info['Nome'] = artist['name'];
-	  	      	  info['Followers'] = artist['followers']['total'];
-	  	      	  info['Popolarità'] = artist['popularity'];
-	              info['Link'] = artist['external_urls']['spotify'];
+	  	      	  info['nome'] = artist['name'];
+	  	      	  info['followers'] = artist['followers']['total'];
+	  	      	  info['popolarità'] = artist['popularity'];
+	              info['link'] = artist['external_urls']['spotify'];
 
 	  	      	  let generi = [];
 	  	      	  for(let i = 0; i < artist['genres'].length; i++) 
 	  	      	      generi.push(artist['genres'][i]);
 
-	  		      info['Generi'] = generi;
+	  		      info['generi'] = generi;
 	  		      res.status(200).send(info);
 	  	      })
 	  	      .catch(function(err)
@@ -197,13 +197,13 @@ function getNewReleases(releases)
         // popolo l'oggetto finale
         datiAlbum.albums.push(
         { 
-            "Tipo album"       : item.album_type,
-            "Nome"             : item.name,
+            "tipo album"       : item.album_type,
+            "nome"             : item.name,
             "ID"               : item.id,
-            "Artisti"          : artisti,
-            "Data di rilascio" : item.release_date,
-            "Link_album"       : item.external_urls.spotify,
-            "Link_artista"     : item.artists[0].external_urls.spotify
+            "artisti"          : artisti,
+            "data di rilascio" : item.release_date,
+            "link_album"       : item.external_urls.spotify,
+            "link_artista"     : item.artists[0].external_urls.spotify
         });
     })
 
