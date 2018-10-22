@@ -34,6 +34,7 @@
 			break;
 		case "Nuove uscite 🕒":
             getNewReleases();
+            tastieraPrincipale("Serve altro?");
 			break;
 		case "Testo canzone 📜":
 			$messaggio = "Per trovare il taesto di una canzone\npuoi procedere in due modi:\n"
@@ -50,29 +51,30 @@
 			break;
 		case "Indietro 🔙":
 			tastieraPrincipale("Pagina iniziale");
+			if(getState($cid) != 0)
+				\update_state($cid, 0);
 			break;
 		case "Si ✅":
 			if(getState($cid) == 3 || getState($cid) == 4)
+			{
 				update_state($cid, 0);
+				tastieraPrincipale("Perfetto!\nEcco altre cose che upoi fare:");
+			}
 			else
-				send($cid, "Comando non disponibile\nin questa situazione.");
-			tastieraPrincipale("");
+				tastieraPrincipale("Comando non disponibile\nin questa situazione");
 			break;
 		case "No ❌":
 			if(getState($cid) == 3 || getState($cid) == 4)
-				send($cid, "Ok, riproviamo allora !");
+				send($cid, "Ok, riproviamo allora!");
 			else
-			{
-				send($cid, "Comando non disponibile\nin questa situazione.");
-				tastieraPrincipale("");
-			}
+				tastieraPrincipale("Comando non disponibile\nin questa situazione.");
 			break;
 		case "/help":
 			send($cid, "<b>Elenco comandi:\n1)</b> /tastiera ⌨");
 			break;
 		default:
             $state = getState($cid);
-            $esito = true;
+            $esito = false;
             switch($state)
             {
                 case 1:
@@ -88,7 +90,7 @@
                		$esito = listenTrack($text);
                		break;
                 default:
-                    send($cid, "Elemento non trovato ❌\nDigita <b>/help</b> per aprire i comnadi.");
+                    send($cid, "Elemento non trovato ❌\nPremi su /help per aprire i comnadi.");
             }
             if(($state == 3 || $state == 4) && $esito)
             {
@@ -96,6 +98,7 @@
             					["Si ✅", "No ❌"],
             					["Indietro 🔙"],
                         	];
+
                	markupKeyboard("La canzone trovata,\nè quella che stavi cercando ?", $keyboard);
             }
             else if($esito)
@@ -117,9 +120,8 @@
 	function tastieraPrincipale($messaggio)
 	{
 		$keyboard = [
-            			["Artista 🎤", "Genere 🎵"],
-                       	["Nuove uscite 🕒", "Testo canzone 📜"],
-                       	["Ascolta musica 🎶"],
+            			["Artista 🎤", "Nuove uscite 🕒"],
+                       	["Ascolta musica 🎶", "Testo canzone 📜"],
                     ];
 
         markupKeyboard($messaggio, $keyboard);
