@@ -84,7 +84,7 @@
                		$esito = listenTrack($text);
                		break;
                 default:
-                    send($cid, "Elemento non trovato ❌\nPremi su /tastiera per accedere alle funzioni del bot");
+                    send($cid, "❌ Elemento non trovato ❌\nPremi su /tastiera per accedere alle funzioni del bot");
             }
             if(($state == 3 || $state == 4) && $esito)
             {
