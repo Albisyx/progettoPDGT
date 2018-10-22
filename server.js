@@ -80,7 +80,7 @@ app.get('/artist/:nomeArtista', (req, res) =>
 	  	      	      generi.push(artist['genres'][i]);
 
 	  		      info['Generi'] = generi;
-	  		      res.send(info);
+	  		      res.status(200).send(info);
 	  	      })
 	  	      .catch(function(err)
             {
@@ -109,7 +109,7 @@ app.get('/new-releases', (req, res) =>
       .then(function(data)
       {
           let nuoviAlbum = getNewReleases(data['albums']['items']);
-          res.send(nuoviAlbum);
+          res.status(200).send(nuoviAlbum);
       })
       .catch(function(err)
       {
@@ -168,7 +168,7 @@ function getArtistTopTracks(IDArtista, nomeArtista, response)
           for(item in data['tracks'])
               topTracks.tracks.push(data['tracks'][item]['name']);
 
-          response.send(topTracks);
+          response.status(200).send(topTracks);
       })
       .catch(function(err)
       {
@@ -248,7 +248,7 @@ function getInfoFromTrack(mod, trackName, res)
            	  }
           }
           else
-          	  res.send({error : 'Canzone non trovata'});
+          	  res.send({error : {status : 404, message : 'Canzone non trovata'}});
       })
       .catch(function(err)
       {
@@ -263,8 +263,8 @@ function getLyrics(artistName, trackName, response)
 {
 	let lyricsOptions =
 	{
-		url: 'https://api.lyrics.ovh/v1/' + artistName + '/' + trackName,
-		json: true
+		  url: 'https://api.lyrics.ovh/v1/' + artistName + '/' + trackName,
+		  json: true
 	};
 
 	rp(lyricsOptions)
@@ -279,7 +279,7 @@ function getLyrics(artistName, trackName, response)
 	  .catch(function(err)
       {
       	if(err['statusCode'] == 404)
-          	response.send({error : 'Lyrics non trovato'});
+          	response.send({error : {status : 404, message : 'Lyrics non trovata'}});
         else
         	response.send(err);
       })
