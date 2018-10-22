@@ -19,18 +19,15 @@
             				["Indietro 🔙"],
                         ];
 
-            markupKeyboard("Cosa vuoi sapere\ndi un artista ?", $keyboard);
+            markupKeyboard("Cosa vuoi sapere\ndi un artista?", $keyboard);
 			break;
 		case "Canzoni più popolari 🔝":
-			send($cid, "Di quale artista vuoi\ntrovare le canzoni\npiù popolari ?");
+			send($cid, "Di quale artista vuoi\ntrovare le canzoni\npiù popolari?");
             update_state($cid, 1);
 			break;
 		case "Info 📰":
-			send($cid, "Di quale artista\nvuoi informazioni ?");
+			send($cid, "Di quale artista\nvuoi informazioni?");
             update_state($cid, 2);
-			break;
-		case "Genere 🎵":
-			send($cid, "Che genere musicale\nstai cercando ?");
 			break;
 		case "Nuove uscite 🕒":
             getNewReleases();
@@ -46,7 +43,7 @@
 			update_state($cid, 3);
 			break;
 		case "Ascolta musica 🎶":
-			send($cid, "Quale canzone vuoi ascoltare ?");
+			send($cid, "Quale canzone vuoi ascoltare?");
 			update_state($cid, 4);
 			break;
 		case "Indietro 🔙":
@@ -69,9 +66,6 @@
 			else
 				tastieraPrincipale("Comando non disponibile\nin questa situazione.");
 			break;
-		case "/help":
-			send($cid, "<b>Elenco comandi:\n1)</b> /tastiera ⌨");
-			break;
 		default:
             $state = getState($cid);
             $esito = false;
@@ -90,7 +84,7 @@
                		$esito = listenTrack($text);
                		break;
                 default:
-                    send($cid, "Elemento non trovato ❌\nPremi su /help per aprire i comnadi.");
+                    send($cid, "Elemento non trovato ❌\nPremi su /tastiera per accedere alle funzioni del bot");
             }
             if(($state == 3 || $state == 4) && $esito)
             {
@@ -99,7 +93,7 @@
             					["Indietro 🔙"],
                         	];
 
-               	markupKeyboard("La canzone trovata,\nè quella che stavi cercando ?", $keyboard);
+               	markupKeyboard("La canzone trovata,\nè quella che stavi cercando?", $keyboard);
             }
             else if($esito)
             	tastieraPrincipale("Serve altro?");
