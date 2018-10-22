@@ -51,7 +51,7 @@
 		{
 			if($dati['error']['status'] == 401)
 			{
-				send($cid, "Servizio momentaneamente non disponibile");
+				send($cid, "⛔Servizio momentaneamente non disponibile⛔");
 				die();
 			}
         	$informazioni = "🔝 Ecco le canzoni più popolari di <b>" . $dati['nome_artista'] . "</b> 🔝\n";
@@ -82,19 +82,19 @@
 		{
 			if($dati['error']['status'] == 401)
 			{
-				send($cid, "Servizio momentaneamente non disponibile");
+				send($cid, "⛔Servizio momentaneamente non disponibile⛔");
 				die();
 			}
 			// stringa da inviare all'utente contenente tutte le info di un'artista
-			$informazioni = "📰 Ecco alcune informazioni su <b>" . $dati['Nome'] . "</b>:\n";
+			$informazioni = "📰 Ecco alcune informazioni su <b>" . $dati['nome'] . "</b>:\n";
 
 			//variabili ausiliarie per comporre la stringa finale da restituire all'utente
-			$followers = "💙 <b>Followers -> </b>" . $dati['Followers'] . "\n";
-			$popolarita = "📊 <b>Popolarità -> </b>" . $dati['Popolarità'] . "\n";
-			$link = "📍 <b>Link a Spotify -> </b> <a href='" . $dati['Link'] . "'>".$dati['Nome']."</a>\n";
+			$followers = "💙 <b>Followers -> </b>" . $dati['followers'] . "\n";
+			$popolarita = "📊 <b>Popolarità -> </b>" . $dati['popolarità'] . "\n";
+			$link = "📍 <b>Link a Spotify -> </b> <a href='" . $dati['link'] . "'>".$dati['nome']."</a>\n";
 			$generi = "💽 <b>Generi:</b> \n";
-			for($i = 0; $i < count($dati['Generi']); $i++)
-				$generi .= "      - ".$dati['Generi'][$i]."\n";
+			for($i = 0; $i < count($dati['generi']); $i++)
+				$generi .= "      - ".$dati['generi'][$i]."\n";
 
 			// composizione della risposta
 			$informazioni .= $followers;
@@ -107,7 +107,7 @@
 		}
 		else
 		{
-			send($chat_id, 'Artista non trovato, riprova !');
+			send($chat_id, 'Artista non trovato, riprova!');
 			return false;
 		}
 	}
@@ -120,7 +120,7 @@
 
 		if($dati['error']['status'] == 401)
 		{
-			send($cid, "Servizio momentaneamente non disponibile");
+			send($cid, "⛔Servizio momentaneamente non disponibile⛔");
 			die();
 		}
 
@@ -129,11 +129,11 @@
 		for($i = 0; $i < count($dati['albums']); $i++)
 		{
 			$item = $dati['albums'][$i];
-			$nuoveUscite .= "<b>Tipo 🎶 -> </b> " . $item['Tipo album'] . "\n";
-			$nuoveUscite .= "<b>Nome 📄 -> </b> <a href='" . $item['Link_album'] . "'>".$item['Nome']."</a>\n";
-			$nuoveUscite .= "<b>Artista 👱 -> </b> <a href='" . $item['Link_artista'] . "'>"
-							.$item['Artisti'][0]."</a>\n";
-			$nuoveUscite .= "<b>Data di rilascio 📅 -> </b> " . $item['Data di rilascio'] . "\n";
+			$nuoveUscite .= "<b>Tipo 🎶 -> </b> " . $item['tipo album'] . "\n";
+			$nuoveUscite .= "<b>Nome 📄 -> </b> <a href='" . $item['link_album'] . "'>".$item['nome']."</a>\n";
+			$nuoveUscite .= "<b>Artista 👱 -> </b> <a href='" . $item['link_artista'] . "'>"
+							.$item['artisti'][0]."</a>\n";
+			$nuoveUscite .= "<b>Data di rilascio 📅 -> </b> " . $item['data di rilascio'] . "\n";
 			//separo con una linea vuota, un nuovo album dal successivo
 			$nuoveUscite .= "\n";
 		}
@@ -166,7 +166,7 @@
 				if($dati['error']['status'] == 404)
 					send($GLOBALS['cid'], "Canzone non trovata!");
 				else if($dati['error']['status'] == 401)
-					send($cid, "Servizio momentaneamente non disponibile");
+					send($cid, "⛔Servizio momentaneamente non disponibile⛔");
 				$esito = false;
 			}
 		}
@@ -190,7 +190,7 @@
 				if($dati['error']['status'] == 404)
 					send($GLOBALS['cid'], "Canzone non trovata!");
 				else if($dati['error']['status'] == 401)
-					send($cid, "Servizio momentaneamente non disponibile");
+					send($cid, "⛔Servizio momentaneamente non disponibile⛔");
 				$esito = false;
 			}				
 		}
@@ -220,7 +220,7 @@
 			if($dati['error']['status'] == 404)
 				send($GLOBALS['cid'], "Canzone non trovata!");
 			else if($dati['error']['status'] == 401)
-				send($cid, "Servizio momentaneamente non disponibile");
+				send($cid, "⛔Servizio momentaneamente non disponibile⛔");
 			$esito = false;
 		}
 	}
