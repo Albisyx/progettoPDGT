@@ -15,7 +15,7 @@ let spotifyApi = new SpotifyWebApi({
 });
 
 // invoco la funzione per ottenere il token
-//spotifyAuthentication();
+spotifyAuthentication();
 
 // metodo che ritorna le 10 canzoni più popolari di un artista
 // per far cio, devo prima ottenere l'id dell'artista partendo dal suo nome
@@ -255,6 +255,8 @@ function getInfoFromTrack(mod, trackName, res)
       })
 }
 
+//funzione che sfrutta un'API esterna per ricevere il testo di una determinata canzone
+// partendo dal nome dell'artista e quello della traccia in se
 function getLyrics(artistName, trackName, response)
 {
 	let lyricsOptions =
