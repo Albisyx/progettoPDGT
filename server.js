@@ -239,7 +239,7 @@ function getInfoFromTrack(mod, trackName, res)
               	  	  artista : track.artists[0].name,
               	  	  album : track.album.name,
               	  	  link_preview : track.preview_url,
-              	  	  link_traccia : track.external_urls.spotify
+              	  	  link_traccia : track.external_urls.spotify,
                       foto_traccia : track.album.images[0].url
               	  };
 
