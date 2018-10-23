@@ -64,13 +64,14 @@ app.get('/artist/:nomeArtista', (req, res) =>
 	  	      	  info['followers'] = artist['followers']['total'];
 	  	      	  info['popolarità'] = artist['popularity'];
 	              info['link'] = artist['external_urls']['spotify'];
+                info['foto_artista'] = artist['images'][0]['url'];
 
 	  	      	  let generi = [];
 	  	      	  for(let i = 0; i < artist['genres'].length; i++) 
 	  	      	      generi.push(artist['genres'][i]);
 
-	  		      info['generi'] = generi;
-	  		      res.status(200).send(info);
+	  		        info['generi'] = generi;
+	  		        res.status(200).send(info);
 	  	      })
 	  	      .catch(function(err)
             {
@@ -193,13 +194,14 @@ function getNewReleases(releases)
         // popolo l'oggetto finale
         datiAlbum.albums.push(
         { 
-            "tipo album"       : item.album_type,
+            "tipo_album"       : item.album_type,
             "nome"             : item.name,
             "ID"               : item.id,
             "artisti"          : artisti,
-            "data di rilascio" : item.release_date,
+            "data_di_rilascio" : item.release_date,
             "link_album"       : item.external_urls.spotify,
-            "link_artista"     : item.artists[0].external_urls.spotify
+            "link_artista"     : item.artists[0].external_urls.spotify,
+            "cover_album"      : item.images[0].url
         });
     })
 
@@ -236,8 +238,9 @@ function getInfoFromTrack(mod, trackName, res)
               	  	  nome : track.name,
               	  	  artista : track.artists[0].name,
               	  	  album : track.album.name,
-              	  	  preview_link : track.preview_url,
-              	  	  track_link : track.external_urls.spotify
+              	  	  link_preview : track.preview_url,
+              	  	  link_traccia : track.external_urls.spotify
+                      foto_traccia : track.album.images[0].url
               	  };
 
               	  res.status(200).send(trackInfo);
