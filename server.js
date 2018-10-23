@@ -15,17 +15,7 @@ let spotifyApi = new SpotifyWebApi({
 });
 
 // invoco la funzione per ottenere il token
-spotifyApi.clientCredentialsGrant()
-  .then(function(data) 
-  {
-      // salvo il token, almeno lo posso usare nelle future chiamate
-      spotifyApi.setAccessToken(data.body['access_token']);
-      console.log('Token ottenuto. scadrà in ' + data.body['expires_in']);
-  },
-  function(err) 
-  {
-      console.log(err);
-  });
+//spotifyAuthentication();
 
 // metodo che ritorna le 10 canzoni più popolari di un artista
 // per far cio, devo prima ottenere l'id dell'artista partendo dal suo nome
@@ -140,6 +130,12 @@ app.get('/lyrics', (req, res) =>
 app.get('/listen/:trackTitle', (req, res) => 
 {
 	getInfoFromTrack('p', req.params.trackTitle, res);
+});
+
+app.get('/refresh-token', (req, res) =>
+{
+	spotifyAuthentication();
+	res.status(200).send({status : "OK"});
 });
 
 // funzione che crea e restituisce il file json contenente le top tracks dato 
@@ -283,6 +279,23 @@ function getLyrics(artistName, trackName, response)
         else
         	response.send(err);
       })
+}
+
+// funzione che fa una richiesta HTTP ai server di Spotify per ottenere il token utile ad accedere ai dati che questa
+// API mette a disposizione
+function spotifyAuthentication()
+{
+	spotifyApi.clientCredentialsGrant()
+  	  .then(function(data) 
+  	  {
+      	  // salvo il token, almeno lo posso usare nelle future chiamate
+      	  spotifyApi.setAccessToken(data.body['access_token']);
+      	  console.log('Token ottenuto. scadrà in ' + data.body['expires_in']);
+  	  },
+  	  function(err) 
+      {
+          console.log(err);
+      });
 }
 
 app.listen(PORT, function()
