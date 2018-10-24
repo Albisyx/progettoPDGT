@@ -59,7 +59,7 @@
 		{
 			if($dati['error']['status'] == 401)
 			{
-				send($cid, "⛔Servizio momentaneamente non disponibile⛔");
+				send($cid, "⛔ Servizio momentaneamente non disponibile ⛔");
 				die();
 			}
         	$informazioni = "🔝 Ecco le canzoni più popolari di <b>" . $dati['nome_artista'] . "</b> 🔝\n";
@@ -74,7 +74,7 @@
 		}
 		else
 		{
-			send($chat_id, 'Artista non trovato, riprova !');
+			send($chat_id, "⚠ Artista non trovato ⚠\nRiprova❗");
 			$esito = false;
 		}
 		return $esito;
@@ -90,7 +90,7 @@
 		{
 			if($dati['error']['status'] == 401)
 			{
-				send($cid, "⛔Servizio momentaneamente non disponibile⛔");
+				send($cid, "⛔ Servizio momentaneamente non disponibile ⛔");
 				die();
 			}
 			// stringa da inviare all'utente contenente tutte le info di un'artista
@@ -116,7 +116,7 @@
 		}
 		else
 		{
-			send($chat_id, 'Artista non trovato, riprova!');
+			send($chat_id, "⚠ Artista non trovato ⚠\nRiprova❗");
 			return false;
 		}
 	}
@@ -129,20 +129,20 @@
 
 		if($dati['error']['status'] == 401)
 		{
-			send($cid, "⛔Servizio momentaneamente non disponibile⛔");
+			send($cid, "⛔ Servizio momentaneamente non disponibile⛔ ");
 			die();
 		}
 
-		send($GLOBALS['cid'], "💿 Ecco a te 5 album appena usciti 💿");
+		send($GLOBALS['cid'], "💽 Ecco a te 5 album appena usciti 💽");
 
 		for($i = 0; $i < count($dati['albums']); $i++)
 		{
 			$item = $dati['albums'][$i];
-			$nuoveUscite .= "<b>Tipo 🎶 -> </b> " . $item['tipo_album'] . "\n";
-			$nuoveUscite .= "<b>Nome 📄 -> </b> <a href='" . $item['link_album'] . "'>".$item['nome']."</a>\n";
-			$nuoveUscite .= "<b>Artista 👱 -> </b> <a href='" . $item['link_artista'] . "'>"
+			$nuoveUscite .= "<b>🏷 Tipo -> </b> " . $item['tipo_album'] . "\n";
+			$nuoveUscite .= "<b>📄 Nome -> </b> <a href='" . $item['link_album'] . "'>".$item['nome']."</a>\n";
+			$nuoveUscite .= "<b>👤 Artista -> </b> <a href='" . $item['link_artista'] . "'>"
 							.$item['artisti'][0]."</a>\n";
-			$nuoveUscite .= "<b>Data di rilascio 📅 -> </b> " . $item['data_di_rilascio'];
+			$nuoveUscite .= "<b>📅 Data di rilascio -> </b> " . $item['data_di_rilascio'];
 			
 			sendPhoto($item['cover_album'], $nuoveUscite);
 			$nuoveUscite = "";
@@ -172,9 +172,9 @@
 			else
 			{
 				if($dati['error']['status'] == 404)
-					send($GLOBALS['cid'], "Canzone non trovata!");
+					send($GLOBALS['cid'], "⚠ Canzone non trovata ⚠\nRiprova❗");
 				else if($dati['error']['status'] == 401)
-					send($cid, "⛔Servizio momentaneamente non disponibile⛔");
+					send($cid, "⛔ Servizio momentaneamente non disponibile ⛔");
 				$esito = false;
 			}
 		}
@@ -196,9 +196,9 @@
 			else
 			{
 				if($dati['error']['status'] == 404)
-					send($GLOBALS['cid'], "Canzone non trovata!");
+					send($GLOBALS['cid'], "⚠ Canzone non trovata ⚠\nRiprova❗");
 				else if($dati['error']['status'] == 401)
-					send($cid, "⛔Servizio momentaneamente non disponibile⛔");
+					send($cid, "⛔ Servizio momentaneamente non disponibile ⛔");
 				$esito = false;
 			}				
 		}
@@ -213,14 +213,14 @@
 
 		if(!$dati['error'])
 		{
-			$messaggio = "<b>Canzone trovata🎶 :</b> <i>".$dati['artista']. " - ".$dati['nome']."</i>\n";
-			$messaggio .= "<b>Album 💽 -> </b> ".$dati['album']."\n";
+			$messaggio = "<b>🎶 Canzone trovata:</b> <i>".$dati['artista']. " - ".$dati['nome']."</i>\n";
+			$messaggio .= "<b>💽 Album -> </b> ".$dati['album']."\n";
 			if($dati['link_preview'] == null)
 				$messaggio .= "⚠️ Purtroppo per questa canzone non è disponibile il link ad una preview. Se hai un'account premium di Spotify, puoi usare il link qui sotto per ascoltare la traccia per intero in alta qualità ⚠️\n";
 			else
-				$messaggio .= "<b>Preview link 📍 -> </b> <a href='".$dati['link_preview']."'>".$dati['nome']."</a>\n";
+				$messaggio .= "<b>📍 Preview link -> </b> <a href='".$dati['link_preview']."'>".$dati['nome']."</a>\n";
 
-			$messaggio .= "<b>Link alla cansone completa 📍 -> </b> <a href='".$dati['link_traccia']."'>".$dati['nome']."</a>";
+			$messaggio .= "<b>📍 Link alla cansone completa -> </b> <a href='".$dati['link_traccia']."'>".$dati['nome']."</a>";
 
 			sendPhoto($dati['foto_traccia']);
 			send($GLOBALS['cid'], $messaggio);
@@ -229,9 +229,9 @@
 		else
 		{
 			if($dati['error']['status'] == 404)
-				send($GLOBALS['cid'], "Canzone non trovata!");
+				send($GLOBALS['cid'], "⚠ Canzone non trovata ⚠\nRiprova❗");
 			else if($dati['error']['status'] == 401)
-				send($cid, "⛔Servizio momentaneamente non disponibile⛔");
+				send($cid, "⛔ Servizio momentaneamente non disponibile ⛔");
 			$esito = false;
 		}
 	}
