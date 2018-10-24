@@ -31,6 +31,14 @@
 		return apiRequest("sendMessage?text=$text&parse_mode=HTML&chat_id=$id&disable_web_page_preview=true");
 	}
 
+	function sendPhoto($photo_link, $text = null)
+	{
+		$url = "sendPhoto?chat_id=".$GLOBALS['cid']."&photo=".$photo_link."&parse_mode=HTML";
+		if($text != null)
+			$url .= "&caption=".urlencode($text);
+		return apiRequest($url);
+	}
+
 	function keyboard($tasti, $text, $id)
 	{
 		$tasti_ric = $tasti;
@@ -102,7 +110,8 @@
 			$informazioni .= $link;
 			$informazioni .= $generi;
 
-			send($chat_id, $informazioni);
+			sendPhoto($dati['foto_artista']);
+			send($GLOBALS['cid'], $informazioni);
 			return true;
 		}
 		else
@@ -124,21 +133,20 @@
 			die();
 		}
 
-		$nuoveUscite = "💿 Ecco a te 5 album appena usciti 💿\n";
+		send($GLOBALS['cid'], "💿 Ecco a te 5 album appena usciti 💿");
 
 		for($i = 0; $i < count($dati['albums']); $i++)
 		{
 			$item = $dati['albums'][$i];
-			$nuoveUscite .= "<b>Tipo 🎶 -> </b> " . $item['tipo album'] . "\n";
+			$nuoveUscite .= "<b>Tipo 🎶 -> </b> " . $item['tipo_album'] . "\n";
 			$nuoveUscite .= "<b>Nome 📄 -> </b> <a href='" . $item['link_album'] . "'>".$item['nome']."</a>\n";
 			$nuoveUscite .= "<b>Artista 👱 -> </b> <a href='" . $item['link_artista'] . "'>"
 							.$item['artisti'][0]."</a>\n";
-			$nuoveUscite .= "<b>Data di rilascio 📅 -> </b> " . $item['data di rilascio'] . "\n";
-			//separo con una linea vuota, un nuovo album dal successivo
-			$nuoveUscite .= "\n";
+			$nuoveUscite .= "<b>Data di rilascio 📅 -> </b> " . $item['data_di_rilascio'];
+			
+			sendPhoto($item['cover_album'], $nuoveUscite);
+			$nuoveUscite = "";
 		}
-
-		send($GLOBALS['cid'], $nuoveUscite);
 	}
 
 	// funzione che si interfaccia al percorso dell'API /lyrics che restituisce il testo di una canzone
@@ -202,16 +210,19 @@
 	{
 		$url = 'https://progetto-pdgt.herokuapp.com/listen/'.urlencode($nomeCanzone);
 		$dati = http_request($url);
+
 		if(!$dati['error'])
 		{
-			$messaggio = "🎶 <b>Canzone trovata:</b> <i>".$dati['artista']. " - ".$dati['nome']."</i>\n";
+			$messaggio = "<b>Canzone trovata🎶 :</b> <i>".$dati['artista']. " - ".$dati['nome']."</i>\n";
 			$messaggio .= "<b>Album 💽 -> </b> ".$dati['album']."\n";
-			if($dati['preview_link'] == null)
+			if($dati['link_preview'] == null)
 				$messaggio .= "⚠️ Purtroppo per questa canzone non è disponibile il link ad una preview. Se hai un'account premium di Spotify, puoi usare il link qui sotto per ascoltare la traccia per intero in alta qualità ⚠️\n";
 			else
-				$messaggio .= "<b>Preview link 📍 -> </b> <a href='".$dati['preview_link']."'>".$dati['nome']."</a>\n";
+				$messaggio .= "<b>Preview link 📍 -> </b> <a href='".$dati['link_preview']."'>".$dati['nome']."</a>\n";
 
-			$messaggio .= "<b>Link alla cansone completa 📍 -> </b> <a href='".$dati['track_link']."'>".$dati['nome']."</a>";
+			$messaggio .= "<b>Link alla cansone completa 📍 -> </b> <a href='".$dati['link_traccia']."'>".$dati['nome']."</a>";
+
+			sendPhoto($dati['foto_traccia']);
 			send($GLOBALS['cid'], $messaggio);
 			return true;
 		}
