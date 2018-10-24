@@ -95,8 +95,10 @@
 
                	markupKeyboard("La canzone trovata,\nè quella che stavi cercando?", $keyboard);
             }
-            else if($esito)
+            else if($esito){
             	tastieraPrincipale("Serve altro?");
+            	update_state($cid, 0);
+            }
             break;
 	}
 
