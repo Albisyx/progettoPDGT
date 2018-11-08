@@ -162,8 +162,8 @@ function getArtistTopTracks(IDArtista, nomeArtista, response)
               tracce : []
           };
 
-          for(item in data['tracce'])
-              topTracks.tracce.push(data['tracce'][item]['name']);
+          for(item in data['tracks'])
+              topTracks.tracce.push(data['tracks'][item]['name']);
 
           response.status(200).send(topTracks);
       })
