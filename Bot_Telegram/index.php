@@ -13,28 +13,28 @@
         case "/tastiera":
 			tastieraPrincipale("Ecco le funzioni del bot");
 			break;
-		case "Artista 🎤":
+		case "Artista 👤":
 			$keyboard = [
             				["Canzoni più popolari 🔝", "Info 📰"],
             				["Indietro 🔙"],
                         ];
 
-            markupKeyboard("Cosa vuoi sapere\ndi un artista?", $keyboard);
+            markupKeyboard("Cosa vuoi sapere\ndi un artista ?", $keyboard);
 			break;
 		case "Canzoni più popolari 🔝":
-			send($cid, "Di quale artista vuoi\ntrovare le canzoni\npiù popolari?");
+			send($cid, "Di quale artista vuoi\ntrovare le canzoni\npiù popolari ?");
             update_state($cid, 1);
 			break;
 		case "Info 📰":
-			send($cid, "Di quale artista\nvuoi informazioni?");
+			send($cid, "Di quale artista\nvuoi informazioni ?");
             update_state($cid, 2);
 			break;
 		case "Nuove uscite 🕒":
             getNewReleases();
-            tastieraPrincipale("Serve altro?");
+            tastieraPrincipale("Serve altro ?");
 			break;
 		case "Testo canzone 📜":
-			$messaggio = "Per trovare il taesto di una canzone\npuoi procedere in due modi:\n"
+			$messaggio = "Per trovare il testo di una canzone\npuoi procedere in due modi:\n"
 						  ."<b>1)</b> inserendo solo il nome della <i>canzone</i>\n"
 						  ."<b>2)</b> inserendo sia il nome della <i>canzone</i> che quello dell'<i>artista</i>\n\n"
 						  ."Per l'opzione 2, è necessario attenersi a questo formato" 
@@ -43,7 +43,7 @@
 			update_state($cid, 3);
 			break;
 		case "Ascolta musica 🎶":
-			send($cid, "Quale canzone vuoi ascoltare?");
+			send($cid, "Quale canzone\nvuoi ascoltare ?");
 			update_state($cid, 4);
 			break;
 		case "Indietro 🔙":
@@ -55,16 +55,16 @@
 			if(getState($cid) == 3 || getState($cid) == 4)
 			{
 				update_state($cid, 0);
-				tastieraPrincipale("Perfetto!\nEcco altre cose che poi fare:");
+				tastieraPrincipale("Perfetto❗\nEcco altre cose che poi fare:");
 			}
 			else
-				tastieraPrincipale("Comando non disponibile\nin questa situazione");
+				tastieraPrincipale("⛔ Comando non disponibile\nin questa situazione ⛔");
 			break;
 		case "No ❌":
 			if(getState($cid) == 3 || getState($cid) == 4)
-				send($cid, "Ok, riproviamo allora!");
+				send($cid, "Ok, riproviamo allora❗");
 			else
-				tastieraPrincipale("Comando non disponibile\nin questa situazione");
+				tastieraPrincipale("⛔ Comando non disponibile\nin questa situazione ⛔");
 			break;
 		default:
             $state = getState($cid);
@@ -84,7 +84,7 @@
                		$esito = listenTrack($text);
                		break;
                 default:
-                    send($cid, "❌ Elemento non trovato ❌\nPremi su /tastiera per accedere alle funzioni del bot");
+                    send($cid, "❌ Elemento non trovato ❌\nPremi su /tastiera per accedere\nalle funzioni del bot 🤖");
             }
             if(($state == 3 || $state == 4) && $esito)
             {
@@ -93,13 +93,23 @@
             					["Indietro 🔙"],
                         	];
 
-               	markupKeyboard("La canzone trovata,\nè quella che stavi cercando?", $keyboard);
+               	markupKeyboard("La canzone trovata,\nè quella che stavi cercando ?", $keyboard);
             }
             else if($esito){
-            	tastieraPrincipale("Serve altro?");
+            	tastieraPrincipale("Serve altro ?");
             	update_state($cid, 0);
             }
             break;
+	}
+
+	function tastieraPrincipale($messaggio)
+	{
+		$keyboard = [
+            			["Artista 👤", "Nuove uscite 🕒"],
+                       	["Testo canzone 📜", "Ascolta musica 🎶"],
+                    ];
+
+        markupKeyboard($messaggio, $keyboard);
 	}
 
 	function markupKeyboard($messaggio, $keyboard)
@@ -111,15 +121,5 @@
                     );
 
 		keyboard($key, $messaggio, $GLOBALS['cid']);
-	}
-	
-	function tastieraPrincipale($messaggio)
-	{
-		$keyboard = [
-            			["Artista 🎤", "Nuove uscite 🕒"],
-                       	["Ascolta musica 🎶", "Testo canzone 📜"],
-                    ];
-
-        markupKeyboard($messaggio, $keyboard);
 	}
 ?>
