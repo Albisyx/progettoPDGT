@@ -163,7 +163,7 @@ function getArtistTopTracks(IDArtista, nomeArtista, response)
           };
 
           for(item in data['tracce'])
-              topTracks.tracks.push(data['tracce'][item]['name']);
+              topTracks.tracce.push(data['tracce'][item]['name']);
 
           response.status(200).send(topTracks);
       })
