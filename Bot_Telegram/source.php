@@ -64,7 +64,7 @@
 			}
         	$informazioni = "🔝 Ecco le canzoni più popolari di <b>" . $dati['nome_artista'] . "</b> 🔝\n";
 
-			for($i = 0; $i < count($dati['tracks']); $i++)
+			for($i = 0; $i < count($dati['tracce']); $i++)
 				$nomiCanzoni .= "<b>".($i + 1).")</b> ".$dati['tracks'][$i]."\n";
 
 			$informazioni .= $nomiCanzoni;
@@ -162,7 +162,7 @@
 
 			if(!$dati['error'])
 			{
-				$artista = $dati['artist'];
+				$artista = $dati['nome_artista'];
 				$testo = $dati['lyrics'];
 
 				$messaggio = "📜 Ecco il testo <b>".ucfirst(strtolower($nomeArtistaCanzone))."</b> di <b>".$artista."</b>:\n\n".$testo;
