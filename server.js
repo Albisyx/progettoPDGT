@@ -159,7 +159,7 @@ function getArtistTopTracks(IDArtista, nomeArtista, response)
       {
           let topTracks = {
               nome_artista : nomeArtista,
-              tracks : []
+              tracce : []
           };
 
           for(item in data['tracks'])
@@ -272,7 +272,7 @@ function getLyrics(artistName, trackName, response)
 	  .then(function(data)
 	  {
 	  	  let result = {
-	  	  	  artist : artistName,
+	  	  	  nome_artista : artistName,
 	  	  	  lyrics : data['lyrics']
 	  	  };
 	  	  response.status(200).send(result);
