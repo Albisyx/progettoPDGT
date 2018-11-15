@@ -53,7 +53,7 @@ Nel primo caso occore ricavare il nome dell'artista per rispettare la sintassi d
 Il bot permette un facile interfacciamento con l'API, fornendo all'utente le informazioni direttamente sullo smartphone.
 
 Per un miglior funzionamento del bot, si è utilizzato un database MySQL fornito da Altervista. Questo fa si che l'utilizzo da parte dell'utente, sia più naturale
-</div>
+</div><br>
 
 Esso si presenta con una serie di bottoni corrispondenti a ognuna delle quattro macro funzioni dell'API:
 + **Artista 👤 ->** Digitando il nome di un artista, il bot può restituire:
