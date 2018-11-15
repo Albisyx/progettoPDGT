@@ -59,13 +59,14 @@
 		{
 			if($dati['error']['status'] == 401)
 			{
-				send($cid, "⛔ Servizio momentaneamente non disponibile ⛔");
-				die();
+				$res = http_request('https://progetto-pdgt.herokuapp.com/refresh-token');
+				if($res['status'] != "OK")
+					die();
 			}
         	$informazioni = "🔝 Ecco le canzoni più popolari di <b>" . $dati['nome_artista'] . "</b> 🔝\n";
 
 			for($i = 0; $i < count($dati['tracce']); $i++)
-				$nomiCanzoni .= "<b>".($i + 1).")</b> ".$dati['tracks'][$i]."\n";
+				$nomiCanzoni .= "<b>".($i + 1).")</b> ".$dati['tracce'][$i]."\n";
 
 			$informazioni .= $nomiCanzoni;
 
@@ -90,8 +91,9 @@
 		{
 			if($dati['error']['status'] == 401)
 			{
-				send($cid, "⛔ Servizio momentaneamente non disponibile ⛔");
-				die();
+				$res = http_request('https://progetto-pdgt.herokuapp.com/refresh-token');
+				if($res['status'] != "OK")
+					die();
 			}
 			// stringa da inviare all'utente contenente tutte le info di un'artista
 			$informazioni = "📰 Ecco alcune informazioni su <b>" . $dati['nome'] . "</b>:\n";
@@ -129,8 +131,9 @@
 
 		if($dati['error']['status'] == 401)
 		{
-			send($cid, "⛔ Servizio momentaneamente non disponibile⛔ ");
-			die();
+			$res = http_request('https://progetto-pdgt.herokuapp.com/refresh-token');
+			if($res['status'] != "OK")
+				die();
 		}
 
 		send($GLOBALS['cid'], "💽 Ecco a te 5 album appena usciti 💽");
@@ -173,8 +176,14 @@
 			{
 				if($dati['error']['status'] == 404)
 					send($GLOBALS['cid'], "⚠ Canzone non trovata ⚠\nRiprova❗");
-				else if($dati['error']['status'] == 401)
+				else if($dati['error']['status'] == 401){
 					send($cid, "⛔ Servizio momentaneamente non disponibile ⛔");
+					$res = http_request('https://progetto-pdgt.herokuapp.com/refresh-token');
+					if($res['status'] == "OK")
+						send($cid, "Riprova tra qualche secondo❗");
+					else
+						die();// in questo caso, significa che il refresh del token non è andato a buon fine
+				}
 				$esito = false;
 			}
 		}
@@ -197,8 +206,14 @@
 			{
 				if($dati['error']['status'] == 404)
 					send($GLOBALS['cid'], "⚠ Canzone non trovata ⚠\nRiprova❗");
-				else if($dati['error']['status'] == 401)
+				else if($dati['error']['status'] == 401){
 					send($cid, "⛔ Servizio momentaneamente non disponibile ⛔");
+					$res = http_request('https://progetto-pdgt.herokuapp.com/refresh-token');
+					if($res['status'] == "OK")
+						send($cid, "Riprova tra qualche secondo❗");
+					else
+						die();// in questo caso, significa che il refresh del token non è andato a buon fine
+				}
 				$esito = false;
 			}				
 		}
@@ -230,8 +245,14 @@
 		{
 			if($dati['error']['status'] == 404)
 				send($GLOBALS['cid'], "⚠ Canzone non trovata ⚠\nRiprova❗");
-			else if($dati['error']['status'] == 401)
+			else if($dati['error']['status'] == 401){
 				send($cid, "⛔ Servizio momentaneamente non disponibile ⛔");
+				$res = http_request('https://progetto-pdgt.herokuapp.com/refresh-token');
+				if($res['status'] == "OK")
+					send($cid, "Riprova tra qualche secondo❗");
+				else
+					die();// in questo caso, significa che il refresh del token non è andato a buon fine
+			}
 			$esito = false;
 		}
 	}
