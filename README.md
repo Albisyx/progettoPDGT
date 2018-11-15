@@ -49,7 +49,7 @@ Nel primo caso occore ricavare il nome dell'artista per rispettare la sintassi d
 
 #### Bot ####
 <div>
-<a><img src='img/screen_bot_benvenuto.png' height='450' align="left"/></a> 
+<a><img src='img/screen_bot_benvenuto.png' height='250' align="left"/></a> 
 Il bot permette un facile interfacciamento con l'API, fornendo all'utente le informazioni direttamente sullo smartphone.
 
 Per un miglior funzionamento del bot, si è utilizzato un database MySQL fornito da Altervista. Questo fa si che l'utilizzo da parte dell'utente, sia più naturale
