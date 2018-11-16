@@ -1,4 +1,4 @@
-# Music API #
+# 🎶 Music API 🎶 #
 
 ## Progetto Piattaforme Digitali per la Gestione del Territorio ##
 
@@ -48,22 +48,27 @@ Qesta API richiede come parametri sia il nome dell'artista che quello della canz
 Nel primo caso occore ricavare il nome dell'artista per rispettare la sintassi di Lirycs.ovh. Questa informazione viene ricavata chiamando ancora una volta in causa le API di Spotify.
 
 #### Bot ####
-<div><a><img src='img/screen_bot_benvenuto.png' height='300' align="center"/></a> 
+
 Il bot permette un facile interfacciamento con l'API, fornendo all'utente le informazioni direttamente sullo smartphone.
 
 Per un miglior funzionamento del bot, si è utilizzato un database MySQL fornito da Altervista. Questo fa si che l'utilizzo da parte dell'utente, sia più naturale
-
+<center>
+<img src='Documents/GitHub/progettoPDGT/img/screen_bot_benvenuto.png' alt="Pagina di benvenuto
+" height='550' >
+</center>
 Esso si presenta con una serie di bottoni corrispondenti a ognuna delle quattro macro funzioni dell'API:
+
 + **Artista 👤 ->** Digitando il nome di un artista, il bot può restituire:
 	* Le dieci canzoni più popolari
 	* Alcune informazioni come nome, followers, popolarità, gereri dell'artista e una foto di esso
 + **Nuove uscite 🕒 ->** Connettendosi a Spotify, mostra i cinque album usciti più recentemente. Ogni album è caratterizzato dal nome, data di uscita, compositori, link ad esso su Spotify e l'immagine di copertina.
-+ **Testo canzone 📜 ->** Restituisce il testo di una data canzone. La ricerca può avvenire in due modi:
+* **Testo canzone 📜 ->** Restituisce il testo di una data canzone. La ricerca può avvenire in due modi:
 	* Digitando solo il titolo della canzone
 	* Inserendo il nome dell'artista più il titolo della canzone, in questo formato:
 	  ```
 	  nome_artista:titolo_canzone
 	  ```
-	<a><img src='img/screen_bot_testo_canzone.png' height='300' align="center"/></a> 
+<center>	  
+<img src='Documents/GitHub/progettoPDGT/img/screen_bot_testo_canzone.png' alt="Ricerca testo canzone" height='550'>
+</center>
 + **Ascolta musica 🎶 ->** Permette di riprodurre una canzone partendo dal titolo. Le tracce possono essere ascoltate con una preview di 30 secondi oppore completamente per chi possiede un account su Spotify.
-</div>
