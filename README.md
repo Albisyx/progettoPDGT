@@ -53,7 +53,7 @@ Il bot permette un facile interfacciamento con l'API, fornendo all'utente le inf
 
 Per un miglior funzionamento del bot, si è utilizzato un database MySQL fornito da Altervista. Questo fa si che l'utilizzo da parte dell'utente, sia più naturale
 <center>
-<img src='Documents/GitHub/progettoPDGT/img/screen_bot_benvenuto.png' alt="Pagina di benvenuto
+<img src='img/screen_bot_benvenuto.png' alt="Pagina di benvenuto
 " height='550' >
 </center>
 Esso si presenta con una serie di bottoni corrispondenti a ognuna delle quattro macro funzioni dell'API:
@@ -69,6 +69,6 @@ Esso si presenta con una serie di bottoni corrispondenti a ognuna delle quattro 
 	  nome_artista:titolo_canzone
 	  ```
 <center>	  
-<img src='Documents/GitHub/progettoPDGT/img/screen_bot_testo_canzone.png' alt="Ricerca testo canzone" height='550'>
+<img src='img/screen_bot_testo_canzone.png' alt="Ricerca testo canzone" height='550'>
 </center>
 + **Ascolta musica 🎶 ->** Permette di riprodurre una canzone partendo dal titolo. Le tracce possono essere ascoltate con una preview di 30 secondi oppore completamente per chi possiede un account su Spotify.
