@@ -72,3 +72,8 @@ Esso si presenta con una serie di bottoni corrispondenti a ognuna delle quattro 
 <img src='img/screen_bot_testo_canzone.png' alt="Ricerca testo canzone" height='550'>
 </center>
 + **Ascolta musica 🎶 ->** Permette di riprodurre una canzone partendo dal titolo. Le tracce possono essere ascoltate con una preview di 30 secondi oppore completamente per chi possiede un account su Spotify.
+
+---
+
+###Links###
+Link alla documentazione: https://app.swaggerhub.com/apis/Albisyx/Music-API/1.0
