@@ -53,8 +53,7 @@ Il bot permette un facile interfacciamento con l'API, fornendo all'utente le inf
 
 Per un miglior funzionamento del bot, si è utilizzato un database MySQL fornito da Altervista. Questo fa si che l'utilizzo da parte dell'utente, sia più naturale
 <center>
-<img src='img/screen_bot_benvenuto.png' alt="Pagina di benvenuto
-" height='550' >
+<img src='img/screen_bot_benvenuto.png' alt="Pagina di benvenuto" height='550' >
 </center>
 Esso si presenta con una serie di bottoni corrispondenti a ognuna delle quattro macro funzioni dell'API:
 
@@ -75,5 +74,5 @@ Esso si presenta con una serie di bottoni corrispondenti a ognuna delle quattro 
 
 ---
 
-###Links###
+### Links ###
 Link alla documentazione: https://app.swaggerhub.com/apis/Albisyx/Music-API/1.0
