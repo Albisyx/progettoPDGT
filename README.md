@@ -52,9 +52,9 @@ Nel primo caso occore ricavare il nome dell'artista per rispettare la sintassi d
 Il bot permette un facile interfacciamento con l'API, fornendo all'utente le informazioni direttamente sullo smartphone.
 
 Per un miglior funzionamento del bot, si è utilizzato un database MySQL fornito da Altervista. Questo fa si che l'utilizzo da parte dell'utente, sia più naturale
-<center>
-<img src='img/screen_bot_benvenuto.png' alt="Pagina di benvenuto" height='550' >
-</center>
+
+<div align="center"><img src='img/screen_bot_benvenuto.png'  height='550' ></div>
+
 Esso si presenta con una serie di bottoni corrispondenti a ognuna delle quattro macro funzioni dell'API:
 
 + **Artista 👤 ->** Digitando il nome di un artista, il bot può restituire:
@@ -67,9 +67,8 @@ Esso si presenta con una serie di bottoni corrispondenti a ognuna delle quattro 
 	  ```
 	  nome_artista:titolo_canzone
 	  ```
-<center>	  
-<img src='img/screen_bot_testo_canzone.png' alt="Ricerca testo canzone" height='550'>
-</center>
+<div align="center"><img src='img/screen_bot_testo_canzone.png' height='550'></div>
+
 + **Ascolta musica 🎶 ->** Permette di riprodurre una canzone partendo dal titolo. Le tracce possono essere ascoltate con una preview di 30 secondi oppore completamente per chi possiede un account su Spotify.
 
 ---
