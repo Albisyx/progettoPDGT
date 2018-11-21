@@ -51,36 +51,36 @@ app.get('/artist/:nomeArtista', (req, res) =>
               else
                   res.send(err);
   	      });
-	  }
-	  else if(req.query.type == 'info')
-	  {
-		    let info = {};
+	}
+	else if(req.query.type == 'info')
+	{
+	    let info = {};
 
-	  	    rp(artistIDOptions)
-	  	      .then(function(data)
-	  	      {
-	  	      	  let artist = data['artists']['items'][0];
-	  	      	  info['nome'] = artist['name'];
-	  	      	  info['followers'] = artist['followers']['total'];
-	  	      	  info['popolarità'] = artist['popularity'];
-	              info['link'] = artist['external_urls']['spotify'];
+	    rp(artistIDOptions)
+	      .then(function(data)
+	      {
+	    		let artist = data['artists']['items'][0];
+	  	      	info['nome'] = artist['name'];
+	  	      	info['followers'] = artist['followers']['total'];
+	  	      	info['popolarità'] = artist['popularity'];
+	            info['link'] = artist['external_urls']['spotify'];
                 info['foto_artista'] = artist['images'][0]['url'];
 
-	  	      	  let generi = [];
-	  	      	  for(let i = 0; i < artist['genres'].length; i++) 
-	  	      	      generi.push(artist['genres'][i]);
+	  	      	let generi = [];
+	  	      	for(let i = 0; i < artist['genres'].length; i++) 
+	  	      	    generi.push(artist['genres'][i]);
 
-	  		        info['generi'] = generi;
-	  		        res.status(200).send(info);
-	  	      })
-	  	      .catch(function(err)
-            {
-	              if(err['statusCode'] == 401)
-                    res.send(err['error']);
+	  		    info['generi'] = generi;
+	  		    res.status(200).send(info);
+	  	  })
+	  	  .catch(function(err)
+          {
+	            if(err['statusCode'] == 401)
+                  res.send(err['error']);
                 else
-                    res.send(err);
-	  	      })
-	  }
+                  res.send(err);
+	  	  })
+	}
 });  
 
 //metodo che ritorna 5 nuovi album rilasciati nel mercato italiano
