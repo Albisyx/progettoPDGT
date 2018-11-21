@@ -60,8 +60,10 @@
 			if($dati['error']['status'] == 401)
 			{
 				$res = http_request('https://progetto-pdgt.herokuapp.com/refresh-token');
-				if($res['status'] != "OK")
+				if($res['status'] != "OK"){
+					send($cid, "⛔ Servizio momentaneamente non disponibile ⛔");
 					die();
+				}
 			}
         	$informazioni = "🔝 Ecco le canzoni più popolari di <b>" . $dati['nome_artista'] . "</b> 🔝\n";
 
@@ -92,8 +94,10 @@
 			if($dati['error']['status'] == 401)
 			{
 				$res = http_request('https://progetto-pdgt.herokuapp.com/refresh-token');
-				if($res['status'] != "OK")
+				if($res['status'] != "OK"){
+					send($cid, "⛔ Servizio momentaneamente non disponibile ⛔");
 					die();
+				}
 			}
 			// stringa da inviare all'utente contenente tutte le info di un'artista
 			$informazioni = "📰 Ecco alcune informazioni su <b>" . $dati['nome'] . "</b>:\n";
@@ -132,8 +136,10 @@
 		if($dati['error']['status'] == 401)
 		{
 			$res = http_request('https://progetto-pdgt.herokuapp.com/refresh-token');
-			if($res['status'] != "OK")
+			if($res['status'] != "OK"){
+				send($cid, "⛔ Servizio momentaneamente non disponibile ⛔");
 				die();
+			}
 		}
 
 		send($GLOBALS['cid'], "💽 Ecco a te 5 album appena usciti 💽");
@@ -170,21 +176,20 @@
 
 				$messaggio = "📜 Ecco il testo <b>".ucfirst(strtolower($nomeArtistaCanzone))."</b> di <b>".$artista."</b>:\n\n".$testo;
 				send($GLOBALS['cid'], $messaggio);
-				$esito = true;
+				return true;
 			}
 			else
 			{
 				if($dati['error']['status'] == 404)
-					send($GLOBALS['cid'], "⚠ Canzone non trovata ⚠\nRiprova❗");
+					send($GLOBALS['cid'], "⚠️ Canzone non trovata ⚠️\nRiprova❗");
 				else if($dati['error']['status'] == 401){
 					send($cid, "⛔ Servizio momentaneamente non disponibile ⛔");
 					$res = http_request('https://progetto-pdgt.herokuapp.com/refresh-token');
-					if($res['status'] == "OK")
-						send($cid, "Riprova tra qualche secondo❗");
-					else
-						die();// in questo caso, significa che il refresh del token non è andato a buon fine
+					send($cid, "Riprova tra qualche secondo❗");
+					if(!$res['status'] == "OK")
+						send($cid, "⚠️ Token non aggiornato correttamente ⚠️");// in questo caso, significa che il refresh del token non è andato a buon fine
 				}
-				$esito = false;
+				return false;
 			}
 		}
 		else
@@ -200,24 +205,22 @@
 				$messaggio = "📜 Ecco il testo <b>".ucfirst(strtolower($arrayNomi[1]))."</b> di <b>"
 							 .ucfirst(strtolower($arrayNomi[0]))."</b>:\n\n".$testo;
 				send($GLOBALS['cid'], $messaggio);
-				$esito =  true;
+				return true;
 			}
 			else
 			{
 				if($dati['error']['status'] == 404)
-					send($GLOBALS['cid'], "⚠ Canzone non trovata ⚠\nRiprova❗");
+					send($GLOBALS['cid'], "⚠️ Canzone non trovata ⚠️\nRiprova❗");
 				else if($dati['error']['status'] == 401){
 					send($cid, "⛔ Servizio momentaneamente non disponibile ⛔");
 					$res = http_request('https://progetto-pdgt.herokuapp.com/refresh-token');
-					if($res['status'] == "OK")
-						send($cid, "Riprova tra qualche secondo❗");
-					else
-						die();// in questo caso, significa che il refresh del token non è andato a buon fine
+					send($cid, "Riprova tra qualche secondo❗");
+					if(!$res['status'] == "OK")
+						send($cid, "⚠️ Token non aggiornato correttamente ⚠️");// in questo caso, significa che il refresh del token non è andato a buon fine
 				}
-				$esito = false;
-			}				
+				return false;
+			}			
 		}
-		return $esito;
 	}
 
 	// funzione che sfrutta il percorso dell'API /listen permettendo di ascoltare 30 secondi di una canzone
@@ -244,16 +247,15 @@
 		else
 		{
 			if($dati['error']['status'] == 404)
-				send($GLOBALS['cid'], "⚠ Canzone non trovata ⚠\nRiprova❗");
+				send($GLOBALS['cid'], "⚠️ Canzone non trovata ⚠️\nRiprova❗");
 			else if($dati['error']['status'] == 401){
 				send($cid, "⛔ Servizio momentaneamente non disponibile ⛔");
 				$res = http_request('https://progetto-pdgt.herokuapp.com/refresh-token');
-				if($res['status'] == "OK")
-					send($cid, "Riprova tra qualche secondo❗");
-				else
-					die();// in questo caso, significa che il refresh del token non è andato a buon fine
+				send($cid, "Riprova tra qualche secondo❗");
+				if(!$res['status'] == "OK")
+					send($cid, "⚠️ Token non aggiornato correttamente ⚠️");// in questo caso, significa che il refresh del token non è andato a buon fine
 			}
-			$esito = false;
+			return false;
 		}
 	}
 ?>
