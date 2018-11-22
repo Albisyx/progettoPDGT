@@ -1,0 +1,240 @@
+openapi: 3.0.0
+info:
+  title: Music API
+  version: "1.0"
+servers:
+  - url: 'http://progetto-pdgt.herokuapp.com'
+    description: Link base all'API ospitata da Heroku
+paths:
+  /artist/{nomeArtista}:
+    get:
+      summary: Effettua alcune operazioni partendo dal nome di un'artista
+      description: In base al valore del parametro **type**, il percorso restituisce le 10 canzoni più popolari di un dato artista oppure alcune informazioni riguardo quest'ultimo
+      parameters:
+        - in: path
+          name: nomeArtista
+          description: Rappresenta il nome dell'artista interessato
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: "Questo parametro può assumere i seguenti due valori: <ul><li>**top-tracks**</li><li>**info**</li></ul>"
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Per type = info -> restituisce un JSON contenente le informazioni riguardo all'artista<br>Per type = top-tracks -> restituisce un JSON contenente le 10 canzoni più popolari del medesimo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nome:
+                    type: string
+                  followers: 
+                    type: integer
+                  popolarità:
+                    type: integer
+                  link:
+                    type: string
+                  foto_artista:
+                    type: string
+                  generi:
+                    type: array
+                    items:
+                      type: string
+                example:
+                  nome: Vasco Rossi
+                  followers: 685646
+                  popolarità: 67
+                  link: https://open.spotify.com/artist/5l4nhyz8876RhgE2d18h65
+                  foto_artista: https://i.scdn.co/image/ad7fb7a190a9dae30f876274fdd451e826c2563c
+                  generi: [classic italian pop, italian pop]
+        '401':
+          description: Codice restituito allo scadere del token per le API di Spotify, dopo un'ora dalla prima chiamata
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message: 
+                    type: string
+                example:
+                  status: 401
+                  message: The access token expired
+  /new-releases:
+    get:
+      summary: Restituisce 5 nuovi album
+      description: Il percorso restituisce 5 album appena usciti con alcune info
+      responses:
+        '200':
+          description: Array di oggetti JSON dove ognuno dei quali rappresenta un album
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  albums:
+                    type: array
+                    items: 
+                      type: object
+                      properties: 
+                        tipo_album:
+                          type: string
+                        nome:
+                          type: string
+                        ID:
+                          type: string
+                        artisti:
+                          type: array
+                          items:
+                            type: string
+                        data_di_rilascio:
+                          type: string
+                        link_album:
+                          type: string
+                        link_artista:
+                          type: string
+                        cover_album:
+                          type: string
+                      example:
+                        tipo_album: album
+                        nome: Ci entro dentro
+                        ID: 0o6miNaq4PrSEWKBNNkLtX
+                        artisti: [JUNIOR CALLY]
+                        data_di_rilascio: 2018/11/02
+                        link_album: https://open.spotify.com/album/0o6miNaq4PrSEWKBNNkLtX
+                        link_artista: https://open.spotify.com/artist/215ciYy7TIYnGRim0I1nJ3
+                        cover_album: https://i.scdn.co/image/f407001b848e00e997bc22b98f33b5be0fef9bcd
+        '401':
+          description: Codice restituito allo scadere del token per le API di Spotify, dopo un'ora dalla prima chiamata
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message: 
+                    type: string
+                example:
+                  status: 401
+                  message: The access token expired
+  /lyrics:
+    get:
+      summary: Testo di una canzone
+      description: Viene restituito il testo di una canzone, specificando solo il nome oppure nome + artista
+      parameters:
+        - in: query
+          name: artist
+          description: Rappresenta il nome dell'artista che ha composto la canzone di cui si vuole avere il testo
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: track_name
+          description: Rappresenta il nome della canzone di cui si vuole avere il testo
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Restituisce un oggetto JSON contenente il nome dell'artista ed il testo della canzone cercata
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nome_artista:
+                    type: string
+                  lyrics: 
+                    type: string
+                example:
+                  nome_artista: Muse
+                  lyrics: m-m-m-m-m-mad-mad-mad\r\nm-m-m-m-m-mad-mad-mad\r\n [...]
+        '401':
+          description: Codice restituito allo scadere del token per le API di Spotify, dopo un'ora dalla prima chiamata
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message: 
+                    type: string
+                example:
+                  status: 401
+                  message: The access token expired
+  /listen/{titoloTraccia}:
+    get:
+      summary: Riproduzione di canzoni
+      description: Percorso che permette di ascoltare la preview di una canzone, oppure di riprodurla interamente mediante Spotify
+      parameters:
+        - in: path
+          name: titoloTraccia
+          required: true
+          description: Canzone che si vuole ascoltare
+          schema:
+            type: string 
+      responses:
+        '200':
+          description: Restituisce un JSON contenente i vari link di ascolto, compresa la copertina dell'album cui la traccia appartiene
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nome:
+                    type: string
+                  artista: 
+                    type: string
+                  album:
+                    type: string
+                  link_preview:
+                    type: string
+                  link_traccia:
+                    type: string
+                  foto_traccia:
+                    type: string
+                example:
+                  name: Wonderwall - Remastered
+                  artista: Oasis
+                  album: (What's The Story) Morning Glory? [Remastered]
+                  link_preview: https://p.scdn.co/mp3-preview/d012e536916c927bd6c8ced0dae75ee3b7715983?cid=5c9b95512ed044fb996cb05a2fbff6a8
+                  link_traccia: https://open.spotify.com/track/5qqabIl2vWzo9ApSC317sa
+                  foto_traccia: https://i.scdn.co/image/2c1cc1039355931f205d5de81f9d0c416e938d85
+        '401':
+          description: Codice restituito allo scadere del token per le API di Spotify, dopo un'ora dalla prima chiamata
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message: 
+                    type: string
+                example:
+                  status: 401
+                  message: The access token expired
+  /refresh-token:
+    get:
+      summary: Rinnova token di accesso
+      description: Percorso che serve per rinnovare il token fornito da Spotify per poter continuare ad effettuare richieste
+      responses:
+        '200':
+          description: Token aggiornato correttamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                example:
+                  status: OK
